@@ -1,0 +1,17 @@
+---
+import Icon from "./Icon.astro";
+
+interface Props {
+  href: string;
+  variant?: "primary" | "secondary" | "ghost";
+  label: string;
+  icon?: boolean;
+}
+
+const { href, variant = "primary", label, icon = true } = Astro.props;
+---
+
+<a class:list={["btn", `btn-${variant}`]} href={href}>
+  <span>{label}</span>
+  {icon && <Icon name="arrow" size={18} />}
+</a>

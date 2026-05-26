@@ -1,0 +1,213 @@
+---
+import Icon from "./Icon.astro";
+import { site } from "../data/site";
+---
+
+<form class="contact-form panel" data-contact-form data-contact-email={site.email}>
+  <div class="form-intro">
+    <span class="eyebrow">Empecemos</span>
+    <h2>Cuéntanos qué quieres lograr</h2>
+    <p>Te respondemos con una lectura inicial del reto y una ruta clara para avanzar sin saturarte de tecnicismos.</p>
+  </div>
+
+  <div class="field-grid">
+    <label>
+      <span>Nombre completo</span>
+      <input name="name" type="text" placeholder="Juan Pérez" autocomplete="name" required />
+    </label>
+
+    <label>
+      <span>Correo electrónico</span>
+      <input name="email" type="email" placeholder="juan@empresa.com" autocomplete="email" required />
+    </label>
+  </div>
+
+  <div class="field-grid">
+    <label>
+      <span>Empresa</span>
+      <input name="company" type="text" placeholder="Nombre de la empresa" autocomplete="organization" />
+    </label>
+
+    <label>
+      <span>Teléfono o WhatsApp</span>
+      <input name="phone" type="tel" placeholder="+57 300 000 0000" autocomplete="tel" />
+    </label>
+  </div>
+
+  <label>
+    <span>Tipo de proyecto</span>
+    <select name="projectType" required>
+      <option value="" disabled selected>Selecciona una opción</option>
+      <option>Arquitectura de software</option>
+      <option>Infraestructura cloud</option>
+      <option>IA y automatización</option>
+      <option>Conectividad y redes</option>
+    </select>
+  </label>
+
+  <label>
+    <span>¿Qué tan pronto quieres empezar?</span>
+    <select name="timeline">
+      <option>Estoy explorando opciones</option>
+      <option>Quiero iniciar este mes</option>
+      <option>Necesito resolver algo urgente</option>
+    </select>
+  </label>
+
+  <label>
+    <span>Cuéntanos el reto</span>
+    <textarea name="message" rows="6" placeholder="Cuéntanos el reto, qué quieres mejorar y qué resultado esperas." required></textarea>
+  </label>
+
+  <button class="btn btn-primary" type="submit">
+    <span>Empezar conversación</span>
+    <Icon name="send" size={16} />
+  </button>
+
+  <p class="privacy-note">Sin compromiso. Usaremos tus datos solo para responder esta solicitud.</p>
+  <p class="form-status" data-form-status aria-live="polite"></p>
+</form>
+
+<script>
+  const form = document.querySelector("[data-contact-form]") as HTMLFormElement | null;
+  const status = document.querySelector("[data-form-status]");
+
+  form?.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(form);
+    const contactEmail = form.dataset.contactEmail || "contacto@isi.com.co";
+    const subject = encodeURIComponent("Nueva solicitud para ISI");
+    const body = encodeURIComponent(
+      [
+        `Nombre: ${formData.get("name") || ""}`,
+        `Correo: ${formData.get("email") || ""}`,
+        `Empresa: ${formData.get("company") || ""}`,
+        `Telefono / WhatsApp: ${formData.get("phone") || ""}`,
+        `Tipo de proyecto: ${formData.get("projectType") || ""}`,
+        `Tiempo para empezar: ${formData.get("timeline") || ""}`,
+        "",
+        "Reto:",
+        `${formData.get("message") || ""}`
+      ].join("\n")
+    );
+
+    if (status) {
+      status.textContent = "Se abrirá tu correo para enviar la solicitud a ISI.";
+    }
+
+    window.location.href = `mailto:${contactEmail}?subject=${subject}&body=${body}`;
+  });
+</script>
+
+<style>
+  .contact-form {
+    display: grid;
+    gap: 20px;
+    padding: clamp(24px, 4vw, 40px);
+  }
+
+  .form-intro {
+    display: grid;
+    gap: 10px;
+    margin-bottom: 4px;
+  }
+
+  .form-intro h2 {
+    margin: 0;
+    color: var(--color-on-surface);
+    font-family: var(--font-display);
+    font-size: clamp(24px, 3vw, 34px);
+    font-weight: 600;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+  }
+
+  .form-intro p {
+    max-width: 620px;
+    margin: 0;
+    color: var(--color-on-surface-muted);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .field-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  label {
+    display: grid;
+    gap: 8px;
+  }
+
+  label span {
+    color: var(--color-on-surface-muted);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0;
+  }
+
+  input,
+  select,
+  textarea {
+    width: 100%;
+    border: 1px solid var(--color-outline-strong);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--color-on-surface);
+    outline: none;
+    padding: 14px 16px;
+    font-size: 15px;
+    transition: border-color 200ms ease, box-shadow 200ms ease, background 200ms ease;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--color-on-surface-muted);
+    opacity: 0.6;
+  }
+
+  select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2386868b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 40px;
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: clamp(100px, 25vh, 160px);
+  }
+
+  input:focus,
+  select:focus,
+  textarea:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(41, 151, 255, 0.15);
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .privacy-note {
+    margin: -4px 0 0;
+    color: var(--color-on-surface-muted);
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .form-status {
+    min-height: 22px;
+    margin: 0;
+    color: var(--color-primary-soft);
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  @media (max-width: 720px) {
+    .field-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

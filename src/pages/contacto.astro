@@ -1,0 +1,437 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ButtonLink from "../components/ButtonLink.astro";
+import ContactForm from "../components/ContactForm.astro";
+import Icon from "../components/Icon.astro";
+import { media, site } from "../data/site";
+
+const startOptions = [
+  {
+    icon: "spark",
+    label: "Idea nueva",
+    title: "Quiero crear una solución",
+    text: "Tienes una necesidad o una oportunidad y quieres convertirla en una ruta clara."
+  },
+  {
+    icon: "layers",
+    label: "Mejora",
+    title: "Quiero ordenar un sistema",
+    text: "Ya existe algo funcionando, pero necesita estructura, estabilidad o mejor experiencia."
+  },
+  {
+    icon: "network",
+    label: "Operación",
+    title: "Quiero conectar o automatizar",
+    text: "Buscas integrar procesos, sedes, datos o herramientas para trabajar con menos fricción."
+  }
+];
+
+const nextSteps = [
+  "Leemos tu solicitud y entendemos el contexto.",
+  "Te proponemos una primera ruta con prioridades.",
+  "Acordamos el alcance inicial y cómo avanzar."
+];
+---
+
+<BaseLayout
+  title="Contacto | ISI"
+  description="Empieza una conversación con ISI para ordenar tu reto tecnológico y avanzar con una ruta clara."
+  active="contacto"
+>
+  <section class="contact-hero">
+    <div class="shell contact-hero-grid">
+      <div class="contact-hero-copy" data-reveal>
+        <span class="eyebrow">Empezar con ISI</span>
+        <h1 class="page-title">Hablemos de lo que quieres lograr</h1>
+        <p class="lead">
+          Cuéntanos tu idea, reto o necesidad. ISI te ayuda a ordenar el camino para que la tecnología se sienta clara, útil y fácil de seguir.
+        </p>
+        <div class="hero-actions" aria-label="Acciones principales de contacto">
+          <ButtonLink href="#formulario-contacto" label="Empezar ahora" />
+          <ButtonLink href="/servicios/" label="Ver servicios" variant="secondary" />
+        </div>
+      </div>
+
+      <div class="panel start-preview" data-reveal style="--reveal-delay: 120ms">
+        <span class="preview-kicker">Ruta simple</span>
+        <div class="preview-steps" aria-label="Ruta de inicio con ISI">
+          <div class="preview-step">
+            <span>01</span>
+            <p>Nos cuentas qué quieres mejorar.</p>
+          </div>
+          <div class="preview-step">
+            <span>02</span>
+            <p>Ordenamos opciones, riesgos y prioridades.</p>
+          </div>
+          <div class="preview-step">
+            <span>03</span>
+            <p>Definimos una primera acción concreta.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt start-section">
+    <div class="shell start-layout">
+      <div class="start-intro" data-reveal>
+        <span class="eyebrow">Formas de avanzar</span>
+        <h2 class="section-title">Elige el punto de partida que más se parece a tu necesidad</h2>
+        <p class="lead">
+          No necesitas tener todo resuelto. Esta parte ayuda a que el contacto sea más cómodo y directo.
+        </p>
+      </div>
+
+      <div class="start-cards" aria-label="Opciones para empezar con ISI">
+        {startOptions.map((option, index) => (
+          <article class="card start-card" data-reveal style={`--reveal-delay: ${index * 70}ms`}>
+            <div class="start-card-head">
+              <span class="icon-box"><Icon name={option.icon} /></span>
+              <span>{option.label}</span>
+            </div>
+            <h3>{option.title}</h3>
+            <p>{option.text}</p>
+            <a class="start-link" href="#formulario-contacto">
+              Empezar por aquí <Icon name="arrow" size={15} />
+            </a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section contact-section" id="formulario-contacto">
+    <div class="shell contact-workspace">
+      <div class="form-wrap" data-reveal>
+        <ContactForm />
+      </div>
+
+      <aside class="contact-aside" data-reveal style="--reveal-delay: 120ms">
+        <div class="panel contact-card">
+          <span class="eyebrow">Contacto directo</span>
+          <h2>También puedes escribirnos por estos canales</h2>
+          <ul class="channel-list">
+            <li>
+              <Icon name="mail" />
+              <a href={`mailto:${site.email}`}>{site.email}</a>
+            </li>
+            <li>
+              <Icon name="phone" />
+              <a href={`tel:${site.phone.replaceAll(" ", "")}`}>{site.phone}</a>
+            </li>
+            <li>
+              <Icon name="map" />
+              <span>{site.location}</span>
+            </li>
+          </ul>
+          <p>{site.schedule}</p>
+        </div>
+
+        <div class="panel response-card">
+          <h2>Qué pasa después</h2>
+          <ol class="next-steps">
+            {nextSteps.map((step, index) => (
+              <li>
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                <p>{step}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+
+        <div class="media-frame map-frame">
+          <img src={media.contactCity} alt="Distrito tecnológico con edificios de vidrio y conectividad urbana" loading="lazy" decoding="async" />
+          <span class="map-label">Medellín, Colombia</span>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  .contact-hero {
+    padding-block: clamp(64px, 9vw, 118px);
+    border-bottom: 1px solid var(--color-outline);
+    background:
+      radial-gradient(ellipse 58% 46% at 78% 18%, rgba(41, 151, 255, 0.08), transparent),
+      var(--color-background);
+  }
+
+  .contact-hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 0.62fr);
+    gap: clamp(36px, 6vw, 76px);
+    align-items: center;
+  }
+
+  .contact-hero-copy {
+    display: grid;
+    gap: 20px;
+    max-width: 760px;
+  }
+
+  .contact-hero-copy .lead {
+    max-width: 680px;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 4px;
+  }
+
+  .start-preview {
+    display: grid;
+    gap: 18px;
+    padding: clamp(24px, 4vw, 34px);
+  }
+
+  .preview-kicker {
+    width: fit-content;
+    border: 1px solid rgba(41, 151, 255, 0.18);
+    border-radius: 999px;
+    background: rgba(41, 151, 255, 0.08);
+    color: var(--color-primary-soft);
+    padding: 7px 11px;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .preview-steps {
+    display: grid;
+    gap: 12px;
+  }
+
+  .preview-step {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 12px;
+    align-items: start;
+    padding: 14px;
+    border: 1px solid var(--color-outline);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.025);
+  }
+
+  .preview-step span {
+    color: var(--color-primary-soft);
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .preview-step p {
+    margin: 0;
+    color: var(--color-on-surface);
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .start-layout {
+    display: grid;
+    grid-template-columns: 320px minmax(0, 1fr);
+    gap: clamp(32px, 6vw, 72px);
+    align-items: start;
+  }
+
+  .start-intro {
+    position: sticky;
+    top: 80px;
+    display: grid;
+    gap: 16px;
+  }
+
+  .start-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .start-card {
+    display: grid;
+    gap: 16px;
+    padding: 24px;
+  }
+
+  .start-card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .start-card-head > span:last-child {
+    border: 1px solid rgba(41, 151, 255, 0.18);
+    border-radius: 999px;
+    background: rgba(41, 151, 255, 0.08);
+    color: var(--color-primary-soft);
+    padding: 6px 10px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .start-card h3,
+  .contact-card h2,
+  .response-card h2 {
+    margin: 0;
+    color: var(--color-on-surface);
+    font-size: 21px;
+    font-weight: 650;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+
+  .start-card p,
+  .contact-card p {
+    margin: 0;
+    color: var(--color-on-surface-muted);
+    font-size: 14px;
+    line-height: 1.65;
+  }
+
+  .start-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    width: fit-content;
+    color: var(--color-primary-soft);
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .start-link svg {
+    transition: transform 180ms ease;
+  }
+
+  .start-link:hover svg {
+    transform: translateX(2px);
+  }
+
+  .contact-section {
+    scroll-margin-top: 72px;
+  }
+
+  .contact-workspace {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(300px, 0.72fr);
+    gap: 24px;
+    align-items: start;
+  }
+
+  .form-wrap {
+    min-width: 0;
+  }
+
+  .contact-aside {
+    display: grid;
+    gap: 18px;
+  }
+
+  .contact-card,
+  .response-card {
+    display: grid;
+    gap: 18px;
+    padding: 26px;
+  }
+
+  .channel-list,
+  .next-steps {
+    display: grid;
+    gap: 14px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .channel-list li {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    color: var(--color-on-surface-muted);
+    font-size: 15px;
+  }
+
+  .channel-list svg {
+    color: var(--color-primary);
+  }
+
+  .channel-list a:hover {
+    color: var(--color-primary-soft);
+  }
+
+  .next-steps li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 12px;
+    align-items: start;
+  }
+
+  .next-steps span {
+    color: var(--color-primary-soft);
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .next-steps p {
+    margin: 0;
+    color: var(--color-on-surface-muted);
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .map-frame {
+    position: relative;
+  }
+
+  .map-frame img {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    filter: saturate(0.75);
+    opacity: 0.78;
+  }
+
+  .map-label {
+    position: absolute;
+    left: 16px;
+    bottom: 16px;
+    z-index: 1;
+    border-radius: 980px;
+    background: rgba(0, 0, 0, 0.75);
+    color: var(--color-primary-soft);
+    padding: 8px 14px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  @media (max-width: 1200px) {
+    .start-cards {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 700px) {
+    .start-cards {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 940px) {
+    .contact-hero-grid,
+    .start-layout,
+    .contact-workspace {
+      grid-template-columns: 1fr;
+    }
+
+    .start-intro {
+      position: static;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .hero-actions {
+      display: grid;
+    }
+  }
+</style>

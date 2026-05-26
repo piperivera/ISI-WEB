@@ -1,0 +1,355 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ButtonLink from "../components/ButtonLink.astro";
+import CtaBand from "../components/CtaBand.astro";
+import SectionIntro from "../components/SectionIntro.astro";
+import ValueCard from "../components/ValueCard.astro";
+import Icon from "../components/Icon.astro";
+import { media, values } from "../data/site";
+---
+
+<BaseLayout
+  title="Nosotros | ISI"
+  description="Conoce la visión, metodología y pilares de ISI para diseñar soluciones inteligentes."
+  active="nosotros"
+>
+  <section class="page-hero" style="position: relative; overflow: hidden;">
+    <div class="ambient-glow" style="--size: 400px; --bg: radial-gradient(circle, rgba(41, 151, 255, 0.08), transparent 70%); --top: -10%; --left: 5%;"></div>
+    <div class="ambient-glow" style="--size: 360px; --bg: radial-gradient(circle, rgba(94, 92, 230, 0.06), transparent 70%); --top: 40%; --left: 60%;"></div>
+    <div class="shell page-grid">
+      <div class="page-copy" data-reveal>
+        <span class="eyebrow">Sobre nuestra visión</span>
+        <h1 class="page-title">Diseñando el futuro de las <span class="text-gradient">soluciones inteligentes</span></h1>
+        <p class="lead">
+          Traducimos desafíos complejos en arquitecturas tecnológicas claras, medibles y listas para crecer con cada operación.
+        </p>
+        <div class="hero-actions">
+          <ButtonLink href="/servicios/" label="Explorar experiencia" />
+          <ButtonLink href="#historia" label="Nuestra historia" variant="ghost" icon={false} />
+        </div>
+      </div>
+
+      <div class="media-frame hero-image" data-reveal style="--reveal-delay: 120ms">
+        <img src={media.aboutLab} alt="Ingenieros colaborando con interfaces holográficas en un laboratorio tecnológico" loading="eager" fetchpriority="high" decoding="async" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="shell">
+      <div data-reveal>
+        <SectionIntro
+          eyebrow="Cultura técnica"
+          title="Nuestros pilares fundamentales"
+          text="La consistencia importa. Por eso usamos los mismos principios en estrategia, arquitectura, implementación y soporte."
+        />
+      </div>
+      <div class="value-grid">
+        {values.map((value, index) => <div data-reveal style={`--reveal-delay: ${index * 90}ms`}><ValueCard {...value} /></div>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section story" id="historia">
+    <div class="shell story-grid">
+      <div class="image-stack" data-reveal>
+        <div class="media-frame">
+          <img src={media.circuitBoard} alt="Circuitos con rutas de luz azul que representan conectividad" loading="lazy" decoding="async" />
+        </div>
+        <div class="media-frame">
+          <img src={media.collaboration} alt="Equipo técnico revisando planos digitales en una mesa iluminada" loading="lazy" decoding="async" />
+        </div>
+      </div>
+
+      <div class="story-copy" data-reveal style="--reveal-delay: 120ms">
+        <span class="eyebrow">Misión</span>
+        <h2 class="section-title">Conectar a la humanidad a través de la inteligencia</h2>
+        <p class="lead">
+          Nuestra tarea es convertir intención de negocio en sistemas precisos. Diseñamos con una mirada completa: datos, seguridad, infraestructura, experiencia y operación.
+        </p>
+        <div class="principles">
+          <article>
+            <Icon name="scan" />
+            <h3>Diagnóstico claro</h3>
+            <p>Mapeamos dependencias, riesgos y oportunidades antes de construir.</p>
+          </article>
+          <article>
+            <Icon name="layers" />
+            <h3>Arquitectura modular</h3>
+            <p>Diseñamos sistemas que se pueden mantener, auditar y extender.</p>
+          </article>
+          <article>
+            <Icon name="shield" />
+            <h3>Seguridad integrada</h3>
+            <p>La protección se define desde el diseño, no como ajuste tardío.</p>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight section-alt">
+    <div class="shell process-section">
+      <div class="process-header" data-reveal>
+        <span class="eyebrow">Cómo trabajamos</span>
+        <h2 class="section-title">Un proceso diseñado para resultados</h2>
+        <p class="lead">Cada proyecto sigue una ruta clara que garantiza calidad, transparencia y entregas a tiempo.</p>
+      </div>
+      <div class="process-steps">
+        <div class="process-step" data-reveal style="--reveal-delay: 0ms">
+          <span class="step-number">01</span>
+          <div>
+            <h3>Diagnóstico</h3>
+            <p>Entendemos el problema, mapeamos dependencias y definimos alcance técnico.</p>
+          </div>
+        </div>
+        <div class="process-step" data-reveal style="--reveal-delay: 100ms">
+          <span class="step-number">02</span>
+          <div>
+            <h3>Arquitectura</h3>
+            <p>Diseñamos la solución con criterios de escalabilidad, seguridad y mantenibilidad.</p>
+          </div>
+        </div>
+        <div class="process-step" data-reveal style="--reveal-delay: 200ms">
+          <span class="step-number">03</span>
+          <div>
+            <h3>Implementación</h3>
+            <p>Construimos con entregas visibles, pruebas continuas y documentación en paralelo.</p>
+          </div>
+        </div>
+        <div class="process-step" data-reveal style="--reveal-delay: 300ms">
+          <span class="step-number">04</span>
+          <div>
+            <h3>Operación</h3>
+            <p>Monitoreo, optimización y soporte continuo para que todo funcione sin sorpresas.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</BaseLayout>
+
+<style>
+  .page-hero {
+    padding-block: clamp(64px, 9vw, 120px);
+    border-bottom: 1px solid var(--color-outline);
+  }
+
+  .page-grid,
+  .story-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(340px, 0.9fr);
+    gap: clamp(40px, 7vw, 80px);
+    align-items: center;
+  }
+
+  .story-grid {
+    align-items: center;
+  }
+
+  .page-copy,
+  .story-copy {
+    display: grid;
+    gap: 20px;
+  }
+
+  .story-copy {
+    max-width: 600px;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 8px;
+  }
+
+  .hero-image img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+  }
+
+  .value-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .story {
+  }
+
+  .image-stack {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    align-self: center;
+  }
+
+  .image-stack .media-frame:nth-child(2) {
+    margin-top: 32px;
+  }
+
+  .image-stack img {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+  }
+
+  .principles {
+    display: grid;
+    gap: 12px;
+    margin-top: 8px;
+  }
+
+  .principles article {
+    display: grid;
+    grid-template-columns: 40px minmax(0, 1fr);
+    column-gap: 14px;
+    align-items: start;
+    padding: 18px;
+    border: 1px solid var(--color-outline);
+    border-radius: 14px;
+    background: rgba(28, 28, 30, 0.4);
+  }
+
+  .principles :global(svg) {
+    grid-row: 1 / span 2;
+    color: var(--color-primary);
+  }
+
+  .principles h3 {
+    grid-column: 2;
+    margin: 0 0 4px;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  .principles p {
+    grid-column: 2;
+    margin: 0;
+    color: var(--color-on-surface-muted);
+    font-size: 14px;
+    line-height: 1.6;
+    letter-spacing: -0.01em;
+  }
+
+  .metrics-section {
+    display: grid;
+    gap: 36px;
+  }
+
+  .metrics-header {
+    display: grid;
+    gap: 14px;
+  }
+
+  .process-section {
+    display: grid;
+    gap: 40px;
+  }
+
+  .process-header {
+    display: grid;
+    gap: 14px;
+    max-width: 600px;
+  }
+
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+
+  .process-step {
+    display: grid;
+    gap: 14px;
+    padding: 24px;
+    border: 1px solid var(--color-outline);
+    border-radius: 14px;
+    background: rgba(22, 22, 24, 0.5);
+    transition: border-color 300ms ease, background 300ms ease;
+  }
+
+  .process-step:hover {
+    border-color: var(--color-outline-strong);
+    background: rgba(28, 28, 30, 0.7);
+  }
+
+  .step-number {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-primary);
+    letter-spacing: 0.02em;
+  }
+
+  .process-step h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  .process-step p {
+    margin: 0;
+    color: var(--color-on-surface-muted);
+    font-size: 13px;
+    line-height: 1.6;
+    letter-spacing: -0.01em;
+  }
+
+  @media (max-width: 1100px) {
+    .value-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 920px) {
+    .page-grid,
+    .story-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .value-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .process-steps {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .image-stack {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 680px) {
+    .hero-actions {
+      display: grid;
+    }
+
+    .image-stack {
+      display: grid;
+      grid-template-columns: 1fr;
+    }
+
+    .image-stack .media-frame:nth-child(2) {
+      margin-top: 0;
+    }
+
+    .image-stack img {
+      aspect-ratio: 16 / 10;
+    }
+
+    .principles article {
+      column-gap: 12px;
+    }
+
+    .process-steps {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

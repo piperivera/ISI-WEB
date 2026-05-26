@@ -1,0 +1,155 @@
+---
+import BrandLogo from "./BrandLogo.astro";
+import Icon from "./Icon.astro";
+import { services, site } from "../data/site";
+---
+
+<footer class="site-footer">
+  <div class="shell footer-grid">
+    <div class="footer-brand">
+      <BrandLogo compact />
+      <p>{site.tagline}</p>
+      <a class="social" href={site.linkedin} aria-label="LinkedIn">
+        <Icon name="arrow" size={16} />
+      </a>
+    </div>
+
+    <div>
+      <h2>Servicios</h2>
+      <nav aria-label="Servicios">
+        {services.slice(0, 4).map((service) => <a href="/servicios/">{service.title}</a>)}
+      </nav>
+    </div>
+
+    <div>
+      <h2>Empresa</h2>
+      <nav aria-label="Empresa">
+        <a href="/nosotros/">Nosotros</a>
+        <a href="/contacto/">Carreras</a>
+        <a href="/contacto/">Preguntas frecuentes</a>
+        <a href="/contacto/">Soporte técnico</a>
+      </nav>
+    </div>
+
+    <div>
+      <h2>Contacto</h2>
+      <nav aria-label="Contacto">
+        <a href={`mailto:${site.email}`}>{site.email}</a>
+        <a href={`tel:${site.phone.replaceAll(" ", "")}`}>{site.phone}</a>
+        <a href="/contacto/">{site.location}</a>
+      </nav>
+    </div>
+  </div>
+
+  <div class="shell footer-bottom">
+    <span>© 2026 {site.legalName}. Todos los derechos reservados.</span>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--color-outline);
+    background: var(--color-surface-lowest);
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.4fr repeat(3, 1fr);
+    gap: 48px;
+    padding-block: 80px 56px;
+  }
+
+  .footer-brand {
+    display: grid;
+    align-content: start;
+    gap: 16px;
+  }
+
+  .footer-brand p {
+    max-width: 320px;
+    margin: 0;
+    color: var(--color-on-surface-muted);
+    font-size: 14px;
+    line-height: 1.6;
+    letter-spacing: -0.01em;
+  }
+
+  .social {
+    display: grid;
+    width: 36px;
+    height: 36px;
+    place-items: center;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--color-on-surface-muted);
+    transition: background 200ms ease, color 200ms ease;
+  }
+
+  .social:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--color-on-surface);
+  }
+
+  h2 {
+    margin: 0 0 16px;
+    color: var(--color-on-surface);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0;
+  }
+
+  nav {
+    display: grid;
+    gap: 12px;
+  }
+
+  nav a {
+    color: var(--color-on-surface-muted);
+    font-size: 14px;
+    line-height: 1.5;
+    letter-spacing: -0.01em;
+    transition: color 200ms ease;
+  }
+
+  nav a:hover {
+    color: var(--color-on-surface);
+  }
+
+  .footer-bottom {
+    padding-block: 24px;
+    border-top: 1px solid var(--color-outline);
+    color: var(--color-on-surface-muted);
+    font-size: 12px;
+  }
+
+  @media (max-width: 900px) {
+    .footer-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      padding-block: 64px 48px;
+    }
+
+    .footer-brand {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: 620px) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+      gap: 32px;
+      padding-block: 56px 40px;
+    }
+  }
+
+  @media (max-width: 400px) {
+    .footer-grid {
+      gap: 24px;
+      padding-block: 40px 32px;
+    }
+
+    .footer-brand p {
+      font-size: 13px;
+    }
+  }
+</style>

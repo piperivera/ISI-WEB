@@ -1,0 +1,199 @@
+---
+import Icon from "./Icon.astro";
+
+interface Props {
+  id: number;
+  name: string;
+  role: string;
+  company: string;
+  text: string;
+  service: string;
+  rating: number;
+  date: string;
+}
+
+const { id, name, role, company, text, service, rating, date } = Astro.props;
+---
+
+<article class="testimonial-card">
+  <div class="testimonial-content">
+    <p class="testimonial-text">“{text}”</p>
+  </div>
+
+  <div class="testimonial-author">
+    <div class="author-info">
+      <h3 class="author-name">{name}</h3>
+      <div class="author-details">
+        <span class="author-role">{role}</span>
+        <span class="author-company">{company}</span>
+      </div>
+    </div>
+
+    <div class="testimonial-meta">
+      <span class="testimonial-service">{service}</span>
+      <div class="testimonial-rating">
+        {[...Array(5)].map((_, i) => (
+          <span
+            class={i < rating ? "star-full" : "star-empty"}
+          >
+            <Icon name="star" size={16} />
+          </span>
+        ))}
+      </div>
+      <span class="testimonial-date">{date}</span>
+    </div>
+  </div>
+</article>
+
+<style>
+  .testimonial-card {
+    display: grid;
+    grid-template-rows: 1fr auto;
+    gap: 24px;
+    min-height: 360px;
+    padding: 28px;
+    border: 1px solid var(--color-outline);
+    border-radius: 16px;
+    background: rgba(12, 12, 14, 0.78);
+    transition: border-color 220ms ease, transform 220ms ease, background 220ms ease, box-shadow 220ms ease;
+  }
+
+  .testimonial-card:hover {
+    border-color: rgba(41, 151, 255, 0.25);
+    background: rgba(18, 18, 22, 0.75);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6),
+                0 0 20px rgba(41, 151, 255, 0.08);
+    transform: translateY(-4px);
+  }
+
+  .testimonial-content {
+    position: relative;
+    padding-left: 20px;
+  }
+
+  .testimonial-content::before {
+    content: "“";
+    position: absolute;
+    left: 0;
+    top: -10px;
+    font-size: 48px;
+    opacity: 0.1;
+    color: var(--color-primary);
+    font-family: var(--font-display);
+    line-height: 1;
+  }
+
+  .testimonial-text {
+    margin: 0;
+    color: var(--color-on-surface);
+    font-size: 16px;
+    line-height: 1.6;
+    letter-spacing: -0.01em;
+  }
+
+  .testimonial-author {
+    display: grid;
+    gap: 12px;
+    align-self: end;
+    padding-top: 18px;
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+  }
+
+  .author-info {
+    display: grid;
+    gap: 4px;
+  }
+
+  .author-name {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--color-on-surface);
+    letter-spacing: -0.02em;
+  }
+
+  .author-details {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .author-role,
+  .author-company {
+    color: var(--color-on-surface-muted);
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .author-role {
+    font-weight: 500;
+  }
+
+  .author-company {
+    font-weight: 600;
+    color: var(--color-on-surface);
+  }
+
+  .testimonial-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 12px;
+    align-items: center;
+    font-size: 13px;
+    color: var(--color-on-surface-muted);
+  }
+
+  .testimonial-service {
+    padding: 6px 9px;
+    border: 1px solid rgba(41, 151, 255, 0.18);
+    border-radius: 999px;
+    background: rgba(41, 151, 255, 0.08);
+    color: var(--color-primary-soft);
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: capitalize;
+  }
+
+  .testimonial-rating {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+  }
+
+  .star-full,
+  .star-empty {
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .star-full {
+    color: var(--color-primary);
+  }
+
+  .star-empty {
+    color: var(--color-on-surface-muted);
+  }
+
+  .testimonial-date {
+    margin-left: auto;
+  }
+
+  @media (max-width: 680px) {
+    .testimonial-card {
+      min-height: 340px;
+      padding: 24px 20px;
+    }
+
+    .testimonial-text {
+      font-size: 16px;
+    }
+
+    .author-name {
+      font-size: 16px;
+    }
+  }
+</style>

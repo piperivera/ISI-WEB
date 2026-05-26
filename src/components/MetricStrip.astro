@@ -1,0 +1,133 @@
+---
+import Icon from "./Icon.astro";
+import { metrics } from "../data/site";
+---
+
+<div class="metrics">
+  <div class="metrics-bg"></div>
+  {metrics.map((metric, i) => (
+    <div class="metric" data-metric data-metric-index={i}>
+      <div class="metric-icon">
+        <Icon name={metric.icon} size={20} />
+      </div>
+      <strong data-metric-value>{metric.value}</strong>
+      <span>{metric.label}</span>
+    </div>
+  ))}
+</div>
+
+<script>
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const metrics = entry.target.querySelectorAll("[data-metric]");
+          metrics.forEach((m, i) => {
+            setTimeout(() => m.classList.add("is-visible"), i * 120);
+          });
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.3 }
+  );
+
+  document.querySelectorAll(".metrics")?.forEach((el) => observer.observe(el));
+</script>
+
+<style>
+  .metrics {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-radius: 20px;
+    overflow: hidden;
+    background: rgba(22, 22, 24, 0.8);
+    border: 1px solid var(--color-outline);
+  }
+
+  .metrics-bg {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent);
+    pointer-events: none;
+  }
+
+  .metric {
+    position: relative;
+    display: grid;
+    gap: 10px;
+    padding: 36px 24px;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(16px) scale(0.96);
+    transition: opacity 500ms cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 500ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .metric.is-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  .metric:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 20%;
+    height: 60%;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, rgba(41, 151, 255, 0.2), transparent);
+  }
+
+  .metric-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    margin: 0 auto;
+    border-radius: 14px;
+    background: rgba(41, 151, 255, 0.1);
+    color: var(--color-primary);
+    border: 1px solid rgba(41, 151, 255, 0.15);
+  }
+
+  strong {
+    color: #ffffff;
+    font-size: clamp(32px, 5vw, 48px);
+    line-height: 1;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    background: linear-gradient(135deg, #ffffff, var(--color-primary-soft));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  span {
+    color: var(--color-on-surface-muted);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0;
+  }
+
+  @media (max-width: 680px) {
+    .metrics {
+      grid-template-columns: 1fr;
+      border-radius: 20px;
+    }
+
+    .metric {
+      padding: 28px 24px;
+    }
+
+    .metric:not(:last-child)::after {
+      right: 20%;
+      top: auto;
+      bottom: 0;
+      height: 1px;
+      width: 60%;
+      background: linear-gradient(to right, transparent, rgba(41, 151, 255, 0.2), transparent);
+    }
+  }
+</style>

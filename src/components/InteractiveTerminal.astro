@@ -1,0 +1,372 @@
+---
+import Icon from "./Icon.astro";
+
+const terminalViews = [
+  {
+    key: "diagnostico",
+    label: "Diagnóstico",
+    icon: "scan",
+    command: "isi iniciar-diagnostico",
+    title: "Entendemos el reto",
+    description: "ISI revisa objetivos, procesos, usuarios y bloqueos antes de proponer una solución.",
+    lines: [
+      "Escuchando necesidades del negocio...",
+      "Ordenando procesos y puntos de fricción...",
+      "Definiendo prioridades con el cliente..."
+    ],
+    result: "Resultado: ruta inicial clara"
+  },
+  {
+    key: "diseno",
+    label: "Diseño",
+    icon: "layers",
+    command: "isi disenar-solucion",
+    title: "Convertimos la idea en plan",
+    description: "La propuesta se organiza por fases, con alcance entendible y decisiones fáciles de revisar.",
+    lines: [
+      "Agrupando módulos: software, IA, nube o conectividad...",
+      "Aterrizando tiempos y responsables...",
+      "Preparando entregables visibles..."
+    ],
+    result: "Resultado: plan claro para avanzar"
+  },
+  {
+    key: "implementacion",
+    label: "Implementar",
+    icon: "cpu",
+    command: "isi construir-con-orden",
+    title: "Construimos con control",
+    description: "El equipo ve avances, pruebas y documentación sin perder claridad durante el proyecto.",
+    lines: [
+      "Construyendo componentes funcionales...",
+      "Probando seguridad y experiencia...",
+      "Documentando para operación y soporte..."
+    ],
+    result: "Resultado: solución lista para operar"
+  }
+];
+---
+
+<div class="terminal-showcase panel" data-isi-terminal data-reveal>
+  <div class="terminal-topbar">
+    <div class="window-controls" aria-hidden="true">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <strong>isi-solution-panel</strong>
+    <small>Experiencia interactiva</small>
+  </div>
+
+  <div class="terminal-tabs" role="tablist" aria-label="Panel interactivo de trabajo ISI">
+    {
+      terminalViews.map((view, index) => (
+        <button
+          class:list={["terminal-tab", { active: index === 0 }]}
+          type="button"
+          role="tab"
+          id={`terminal-tab-${view.key}`}
+          aria-selected={index === 0 ? "true" : "false"}
+          aria-controls={`terminal-panel-${view.key}`}
+          tabindex={index === 0 ? "0" : "-1"}
+          data-terminal-tab={view.key}
+        >
+          <Icon name={view.icon} size={15} />
+          <span>{view.label}</span>
+        </button>
+      ))
+    }
+  </div>
+
+  <div class="terminal-body">
+    {
+      terminalViews.map((view, index) => (
+        <section
+          class:list={["terminal-view", { active: index === 0 }]}
+          id={`terminal-panel-${view.key}`}
+          role="tabpanel"
+          aria-labelledby={`terminal-tab-${view.key}`}
+          data-terminal-view={view.key}
+          hidden={index !== 0}
+        >
+          <div class="terminal-console" aria-label={`Consola de ${view.label}`}>
+            <p><span>isi@core:~$</span> {view.command}</p>
+            {view.lines.map((line) => (
+              <p><span>✓</span> {line}</p>
+            ))}
+          </div>
+
+          <div class="terminal-explain">
+            <span class="eyebrow">Ruta ISI</span>
+            <h2>{view.title}</h2>
+            <p>{view.description}</p>
+            <div class="terminal-result">
+              <Icon name="check" size={16} />
+              <strong>{view.result}</strong>
+            </div>
+          </div>
+        </section>
+      ))
+    }
+  </div>
+</div>
+
+<script>
+  const terminal = document.querySelector("[data-isi-terminal]");
+
+  if (terminal) {
+    const tabs = Array.from(terminal.querySelectorAll("[data-terminal-tab]")) as HTMLElement[];
+    const views = terminal.querySelectorAll("[data-terminal-view]");
+
+    function activateTerminalTab(tab: HTMLElement, shouldFocus = false) {
+      const selected = tab.getAttribute("data-terminal-tab");
+
+      tabs.forEach((item) => {
+        const isActive = item === tab;
+        item.classList.toggle("active", isActive);
+        item.setAttribute("aria-selected", String(isActive));
+        item.setAttribute("tabindex", isActive ? "0" : "-1");
+      });
+
+      views.forEach((view) => {
+        const isActive = view.getAttribute("data-terminal-view") === selected;
+        view.classList.toggle("active", isActive);
+        if (isActive) {
+          view.removeAttribute("hidden");
+        } else {
+          view.setAttribute("hidden", "");
+        }
+      });
+
+      if (shouldFocus) tab.focus();
+    }
+
+    tabs.forEach((tab, index) => {
+      tab.addEventListener("click", () => activateTerminalTab(tab));
+      tab.addEventListener("keydown", (event) => {
+        const key = event.key;
+        if (!["ArrowRight", "ArrowLeft", "Home", "End"].includes(key)) return;
+
+        event.preventDefault();
+        const lastIndex = tabs.length - 1;
+        let nextIndex = index;
+
+        if (key === "ArrowRight") nextIndex = index === lastIndex ? 0 : index + 1;
+        if (key === "ArrowLeft") nextIndex = index === 0 ? lastIndex : index - 1;
+        if (key === "Home") nextIndex = 0;
+        if (key === "End") nextIndex = lastIndex;
+
+        activateTerminalTab(tabs[nextIndex], true);
+      });
+    });
+  }
+</script>
+
+<style>
+  .terminal-showcase {
+    overflow: hidden;
+    border-radius: 18px;
+    background:
+      radial-gradient(circle at 12% 0%, rgba(41, 151, 255, 0.1), transparent 38%),
+      rgba(8, 8, 11, 0.94);
+  }
+
+  .terminal-topbar {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 14px;
+    align-items: center;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--color-outline);
+    background: rgba(255, 255, 255, 0.035);
+  }
+
+  .window-controls {
+    display: flex;
+    gap: 7px;
+  }
+
+  .window-controls span {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+
+  .window-controls span:nth-child(1) {
+    background: #ff5f56;
+  }
+
+  .window-controls span:nth-child(2) {
+    background: #ffbd2e;
+  }
+
+  .window-controls span:nth-child(3) {
+    background: #27c93f;
+  }
+
+  .terminal-topbar strong {
+    overflow: hidden;
+    color: var(--color-on-surface);
+    font-size: 13px;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .terminal-topbar small {
+    color: var(--color-primary-soft);
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .terminal-tabs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-bottom: 1px solid var(--color-outline);
+  }
+
+  .terminal-tab {
+    display: flex;
+    min-height: 46px;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: 0;
+    border-right: 1px solid var(--color-outline);
+    background: rgba(255, 255, 255, 0.015);
+    color: var(--color-on-surface-muted);
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 700;
+    transition: background 180ms ease, color 180ms ease;
+  }
+
+  .terminal-tab:last-child {
+    border-right: 0;
+  }
+
+  .terminal-tab:hover,
+  .terminal-tab.active {
+    background: rgba(41, 151, 255, 0.08);
+    color: var(--color-primary-soft);
+  }
+
+  .terminal-body {
+    min-height: 330px;
+  }
+
+  .terminal-view {
+    grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+  }
+
+  .terminal-view.active {
+    display: grid;
+  }
+
+  .terminal-console,
+  .terminal-explain {
+    min-width: 0;
+    padding: clamp(22px, 4vw, 34px);
+  }
+
+  .terminal-console {
+    display: grid;
+    align-content: center;
+    gap: 12px;
+    border-right: 1px solid var(--color-outline);
+    background:
+      linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
+    background-size: 28px 28px;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  }
+
+  .terminal-console p {
+    margin: 0;
+    color: var(--color-on-surface);
+    font-size: clamp(12px, 1.45vw, 15px);
+    line-height: 1.6;
+  }
+
+  .terminal-console span {
+    color: var(--color-primary-soft);
+    font-weight: 800;
+  }
+
+  .terminal-explain {
+    display: grid;
+    align-content: center;
+    gap: 14px;
+  }
+
+  .terminal-explain h2 {
+    margin: 0;
+    color: var(--color-on-surface);
+    font-family: var(--font-display);
+    font-size: clamp(28px, 3.8vw, 44px);
+    font-weight: 750;
+    line-height: 1.06;
+    letter-spacing: -0.03em;
+  }
+
+  .terminal-explain p {
+    margin: 0;
+    color: var(--color-on-surface-muted);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  .terminal-result {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    width: fit-content;
+    margin-top: 4px;
+    padding: 10px 13px;
+    border: 1px solid rgba(41, 151, 255, 0.18);
+    border-radius: 999px;
+    background: rgba(41, 151, 255, 0.08);
+    color: var(--color-on-surface);
+    font-size: 13px;
+  }
+
+  .terminal-result svg {
+    color: var(--color-primary-soft);
+  }
+
+  @media (max-width: 820px) {
+    .terminal-topbar {
+      grid-template-columns: auto 1fr;
+    }
+
+    .terminal-topbar small {
+      display: none;
+    }
+
+    .terminal-tabs {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      overflow: hidden;
+    }
+
+    .terminal-tab {
+      min-width: 0;
+      gap: 5px;
+      padding-inline: 6px;
+      font-size: 12px;
+    }
+
+    .terminal-body {
+      min-height: auto;
+    }
+
+    .terminal-view.active {
+      grid-template-columns: 1fr;
+    }
+
+    .terminal-console {
+      border-right: 0;
+      border-bottom: 1px solid var(--color-outline);
+    }
+  }
+</style>

@@ -1,0 +1,717 @@
+---
+import Icon from "./Icon.astro";
+---
+
+<div class="configurator panel" data-configurator data-reveal>
+  <div class="configurator-main">
+    <div class="configurator-header">
+      <span class="eyebrow">Servicios ISI</span>
+      <h2>Elige tu punto de partida</h2>
+      <p class="lead" id="configuratorHelp">Selecciona las áreas que necesitas y mira una orientación sencilla antes de empezar.</p>
+    </div>
+
+    <!-- Stepper steps -->
+    <div class="stepper-content">
+      <!-- Step 1: Modules -->
+      <div class="config-step active" data-step="1">
+        <h3><span class="step-badge">1</span> Elige qué área quieres trabajar</h3>
+        <div class="modules-grid">
+          <label class="module-opt">
+            <input type="checkbox" name="modules" value="IA" checked data-tech="Asistentes IA, Automatización, Análisis de datos, Integraciones" />
+            <span class="opt-card">
+              <span class="opt-icon"><Icon name="cpu" size={20} /></span>
+              <span class="opt-copy">
+                <strong>IA y automatización</strong>
+                <small>Asistentes, flujos automáticos y apoyo para tareas repetitivas.</small>
+              </span>
+            </span>
+          </label>
+
+          <label class="module-opt">
+            <input type="checkbox" name="modules" value="Cloud" checked data-tech="Nube, Seguridad, Monitoreo, Copias de respaldo" />
+            <span class="opt-card">
+              <span class="opt-icon"><Icon name="cloud" size={20} /></span>
+              <span class="opt-copy">
+                <strong>Infraestructura en la nube</strong>
+                <small>Ambientes seguros, monitoreo y bases para crecer con orden.</small>
+              </span>
+            </span>
+          </label>
+
+          <label class="module-opt">
+            <input type="checkbox" name="modules" value="SDWAN" data-tech="Conectividad, Acceso seguro, Redes entre sedes, Continuidad" />
+            <span class="opt-card">
+              <span class="opt-icon"><Icon name="network" size={20} /></span>
+              <span class="opt-copy">
+                <strong>Conectividad entre sedes</strong>
+                <small>Redes seguras para conectar equipos, sedes y servicios.</small>
+              </span>
+            </span>
+          </label>
+
+          <label class="module-opt">
+            <input type="checkbox" name="modules" value="Security" data-tech="Protección, Auditoría, Control de accesos, Respuesta a incidentes" />
+            <span class="opt-card">
+              <span class="opt-icon"><Icon name="shield" size={20} /></span>
+              <span class="opt-copy">
+                <strong>Ciberseguridad aplicada</strong>
+                <small>Protección, controles y revisión de riesgos desde el diseño.</small>
+              </span>
+            </span>
+          </label>
+
+          <label class="module-opt">
+            <input type="checkbox" name="modules" value="Software" data-tech="Aplicación web, APIs, Base de datos, Paneles internos" />
+            <span class="opt-card">
+              <span class="opt-icon"><Icon name="layers" size={20} /></span>
+              <span class="opt-copy">
+                <strong>Arquitectura de software</strong>
+                <small>Aplicaciones, plataformas internas y sistemas conectados.</small>
+              </span>
+            </span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Step 2: Scale -->
+      <div class="config-step mt-6" data-step="2">
+        <h3><span class="step-badge">2</span> Elige el tamaño del proyecto</h3>
+        <div class="scale-row">
+          <div class="scale-group">
+            <label for="projectScale">Escala de operación</label>
+            <select id="projectScale" class="config-select" aria-describedby="configuratorHelp">
+              <option value="startup" data-timeline="3 a 5 semanas">Inicio rápido / primera versión</option>
+              <option value="enterprise" selected data-timeline="6 a 10 semanas">Empresa en crecimiento</option>
+              <option value="global" data-timeline="Por fases">Operación grande o varias sedes</option>
+            </select>
+          </div>
+
+          <div class="scale-group">
+            <label for="projectSla">Nivel de continuidad</label>
+            <select id="projectSla" class="config-select" aria-describedby="configuratorHelp">
+              <option value="standard" data-continuity="Buena">Buena continuidad</option>
+              <option value="high" selected data-continuity="Alta">Alta continuidad</option>
+              <option value="zero" data-continuity="Crítica">Operación crítica</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Projection summary sidebar -->
+  <div class="configurator-sidebar">
+    <div class="summary-card" aria-live="polite">
+      <div class="summary-header">
+        <Icon name="scan" size={16} />
+        <h4>Resumen inicial</h4>
+      </div>
+
+      <div class="summary-metric">
+        <span class="metric-label">Ruta estimada</span>
+        <strong id="summaryTimeline">6 a 10 semanas</strong>
+        <span class="metric-sub">Orientativo. Lo confirmamos al conversar.</span>
+      </div>
+
+      <div class="summary-details">
+        <div class="detail-item">
+          <span>Continuidad:</span>
+          <strong id="summaryContinuity">Alta</strong>
+        </div>
+        <div class="detail-item">
+          <span>Siguiente paso:</span>
+          <strong id="summaryNextStep">Empezar</strong>
+        </div>
+      </div>
+
+      <div class="recommendation-card">
+        <span>Recomendación ISI</span>
+        <strong id="summaryFocus">Automatización con base segura</strong>
+        <p id="summaryAdvice">Comienza con una revisión corta para validar procesos, datos e integraciones antes de construir.</p>
+        <small id="summaryMemory">La orientación cambia según tus selecciones.</small>
+      </div>
+
+      <div class="tech-stack-wrap">
+        <span>Componentes sugeridos:</span>
+        <div class="tech-tags" id="summaryStack">
+          <!-- Stack tags render dynamically -->
+        </div>
+      </div>
+
+      <button id="injectConfigBtn" class="btn btn-primary w-full mt-4" type="button">
+        <span>Llevar al formulario</span>
+        <Icon name="arrow" size={14} />
+      </button>
+      <p class="sidebar-tip">Agrega esta ruta al formulario con un solo clic.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  const CONFIG_STORAGE_KEY = "isi-project-configurator";
+
+  function initConfigurator() {
+    const configurator = document.querySelector("[data-configurator]") as HTMLElement;
+    if (!configurator || configurator.dataset.ready === "true") return;
+    configurator.dataset.ready = "true";
+
+    const modules = configurator.querySelectorAll('input[name="modules"]') as NodeListOf<HTMLInputElement>;
+    const scaleSelect = configurator.querySelector("#projectScale") as HTMLSelectElement;
+    const slaSelect = configurator.querySelector("#projectSla") as HTMLSelectElement;
+
+    const summaryTimeline = configurator.querySelector("#summaryTimeline");
+    const summaryContinuity = configurator.querySelector("#summaryContinuity");
+    const summaryNextStep = configurator.querySelector("#summaryNextStep");
+    const summaryStack = configurator.querySelector("#summaryStack");
+    const summaryFocus = configurator.querySelector("#summaryFocus");
+    const summaryAdvice = configurator.querySelector("#summaryAdvice");
+    const summaryMemory = configurator.querySelector("#summaryMemory");
+    const injectBtn = configurator.querySelector("#injectConfigBtn");
+
+    if (!scaleSelect || !slaSelect) return;
+
+    function readSavedState() {
+      try {
+        const saved = window.localStorage?.getItem(CONFIG_STORAGE_KEY);
+        if (!saved) return null;
+        const parsed = JSON.parse(saved);
+        if (!Array.isArray(parsed.modules)) return null;
+        return parsed;
+      } catch {
+        return null;
+      }
+    }
+
+    function optionExists(select: HTMLSelectElement, value: string) {
+      return Array.from(select.options).some((option) => option.value === value);
+    }
+
+    const savedState = readSavedState();
+    let restoredState = false;
+
+    if (savedState) {
+      const savedModules = new Set<string>(savedState.modules);
+      modules.forEach((module) => {
+        module.checked = savedModules.has(module.value);
+      });
+
+      if (typeof savedState.scale === "string" && optionExists(scaleSelect, savedState.scale)) {
+        scaleSelect.value = savedState.scale;
+      }
+
+      if (typeof savedState.sla === "string" && optionExists(slaSelect, savedState.sla)) {
+        slaSelect.value = savedState.sla;
+      }
+
+      restoredState = true;
+    }
+
+    function getModuleLabel(module: HTMLInputElement) {
+      return module.closest(".module-opt")?.querySelector("strong")?.textContent?.trim() || module.value;
+    }
+
+    function saveState(activeModules: HTMLInputElement[]) {
+      try {
+        window.localStorage?.setItem(
+          CONFIG_STORAGE_KEY,
+          JSON.stringify({
+            modules: activeModules.map((module) => module.value),
+            scale: scaleSelect.value,
+            sla: slaSelect.value,
+            updatedAt: Date.now()
+          })
+        );
+      } catch {
+        // Local storage is optional; the configurator still works without it.
+      }
+    }
+
+    function updateRecommendation(activeModules: HTMLInputElement[]) {
+      const selected = new Set(activeModules.map((module) => module.value));
+      let focus = "Ruta inicial por definir";
+      let advice = "Selecciona una necesidad para que ISI te sugiera un primer paso más claro.";
+
+      if (selected.has("IA") && selected.has("Software")) {
+        focus = "Automatización conectada al negocio";
+        advice = "Empieza por mapear el proceso, definir datos disponibles y crear una primera versión medible.";
+      } else if (selected.has("Security") || slaSelect.value === "zero") {
+        focus = "Continuidad y seguridad primero";
+        advice = "Conviene iniciar revisando riesgos, accesos, respaldo y respuesta ante incidentes.";
+      } else if (selected.has("Cloud") && selected.has("SDWAN")) {
+        focus = "Base estable para crecer";
+        advice = "La prioridad es ordenar nube, conectividad, monitoreo y gobierno antes de escalar servicios.";
+      } else if (selected.has("IA")) {
+        focus = "IA útil, no decorativa";
+        advice = "El mejor inicio es elegir un caso repetitivo, medirlo y validar valor antes de ampliar el alcance.";
+      } else if (selected.has("Software")) {
+        focus = "Producto digital por fases";
+        advice = "Define usuarios, flujo principal y entregables mínimos para construir con claridad desde la primera etapa.";
+      } else if (selected.has("Cloud")) {
+        focus = "Infraestructura ordenada";
+        advice = "Empieza por ambientes, seguridad, respaldo y monitoreo para reducir fricción operativa.";
+      } else if (selected.has("SDWAN")) {
+        focus = "Conectividad confiable";
+        advice = "Mapea sedes, usuarios y servicios críticos para priorizar continuidad y acceso seguro.";
+      }
+
+      if (scaleSelect.value === "global" && activeModules.length > 0) {
+        advice += " Para una operación grande, recomendamos documentar dependencias y responsables desde el día uno.";
+      }
+
+      if (summaryFocus) summaryFocus.textContent = focus;
+      if (summaryAdvice) summaryAdvice.textContent = advice;
+      if (summaryMemory) {
+        summaryMemory.textContent = restoredState
+          ? "Retomamos tu selección anterior en este navegador."
+          : "La orientación cambia según tus selecciones.";
+      }
+    }
+
+    function calculateMetrics() {
+      const activeModules = Array.from(modules).filter((module) => module.checked);
+      const scaleOption = scaleSelect.options[scaleSelect.selectedIndex];
+      const timeline = scaleOption.getAttribute("data-timeline") || "Por definir";
+
+      if (summaryTimeline) {
+        if (activeModules.length === 0) {
+          summaryTimeline.textContent = "Por definir";
+        } else if (scaleSelect.value === "global") {
+          summaryTimeline.textContent = "Por fases";
+        } else if (activeModules.length >= 4) {
+          summaryTimeline.textContent = scaleSelect.value === "startup" ? "5 a 7 semanas" : "8 a 12 semanas";
+        } else {
+          summaryTimeline.textContent = timeline;
+        }
+      }
+
+      const continuityOption = slaSelect.options[slaSelect.selectedIndex];
+      const continuityVal = continuityOption.getAttribute("data-continuity") || "Buena";
+      if (summaryContinuity) {
+        summaryContinuity.textContent = continuityVal;
+      }
+
+      if (summaryNextStep) {
+        summaryNextStep.textContent = activeModules.length === 0 ? "Elegir necesidad" : "Empezar";
+      }
+
+      if (summaryStack) {
+        summaryStack.innerHTML = "";
+        const tagsSet = new Set<string>();
+
+        activeModules.forEach((module) => {
+          const techs = module.getAttribute("data-tech") || "";
+          techs.split(",").forEach((tech) => {
+            if (tech.trim()) tagsSet.add(tech.trim());
+          });
+        });
+
+        tagsSet.add("Ruta por fases");
+        if (scaleSelect.value === "global") tagsSet.add("Operación multi-sede");
+        if (activeModules.length === 0) tagsSet.add("Revisión inicial");
+
+        Array.from(tagsSet).slice(0, 8).forEach((tech) => {
+          const span = document.createElement("span");
+          span.className = "tech-tag-badge";
+          span.textContent = tech;
+          summaryStack.appendChild(span);
+        });
+      }
+
+      updateRecommendation(activeModules);
+      saveState(activeModules);
+    }
+
+    modules.forEach((module) => module.addEventListener("change", calculateMetrics));
+    scaleSelect.addEventListener("change", calculateMetrics);
+    slaSelect.addEventListener("change", calculateMetrics);
+
+    calculateMetrics();
+
+    injectBtn?.addEventListener("click", () => {
+      const activeModules = Array.from(modules).filter((module) => module.checked);
+      const activeModulesText = activeModules.map(getModuleLabel).join(", ") || "Revisión inicial";
+      const scaleText = scaleSelect.options[scaleSelect.selectedIndex].text;
+      const slaText = slaSelect.options[slaSelect.selectedIndex].text;
+      const timelineText = summaryTimeline?.textContent || "";
+      const focusText = summaryFocus?.textContent || "Ruta inicial";
+
+      const textarea = document.querySelector('textarea[name="message"]') as HTMLTextAreaElement;
+      const formSelector = document.querySelector('select[name="projectType"]') as HTMLSelectElement;
+
+      const message = `Quiero explorar una solución con este enfoque:\n` +
+        `- Necesidades: ${activeModulesText}\n` +
+        `- Tamaño del proyecto: ${scaleText}\n` +
+        `- Continuidad esperada: ${slaText}\n` +
+        `- Ruta estimada: ${timelineText}\n` +
+        `- Recomendación ISI: ${focusText}\n\n` +
+        `Quisiera afinar el alcance y definir una primera ruta de implementación.`;
+
+      if (textarea) {
+        textarea.value = message;
+
+        if (formSelector) {
+          if (activeModules.some((module) => module.value === "IA")) {
+            formSelector.value = "IA y automatización";
+          } else if (activeModules.some((module) => module.value === "Cloud")) {
+            formSelector.value = "Infraestructura cloud";
+          } else if (activeModules.some((module) => module.value === "SDWAN")) {
+            formSelector.value = "Conectividad y redes";
+          } else {
+            formSelector.value = "Arquitectura de software";
+          }
+        }
+
+        const statusMsg = document.querySelector("[data-form-status]");
+        if (statusMsg) {
+          statusMsg.textContent = "Ruta cargada en el formulario.";
+          statusMsg.classList.add("text-success");
+          setTimeout(() => {
+            statusMsg.textContent = "";
+            statusMsg.classList.remove("text-success");
+          }, 6000);
+        }
+
+        textarea.scrollIntoView({ behavior: "smooth", block: "center" });
+        textarea.focus();
+      } else {
+        saveState(activeModules);
+        window.location.href = "/contacto/#formulario-contacto";
+      }
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", initConfigurator);
+  initConfigurator();
+</script>
+
+<style>
+  .configurator {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    border-radius: 20px;
+    overflow: hidden;
+    background: rgba(12, 12, 15, 0.7);
+    border: 1px solid var(--color-outline);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+  }
+
+  .configurator-main {
+    padding: clamp(24px, 4vw, 40px);
+  }
+
+  .configurator-header {
+    margin-bottom: 28px;
+  }
+
+  .configurator-header h2 {
+    margin-block: 8px 12px;
+    font-size: clamp(24px, 3.2vw, 36px);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    font-family: var(--font-display);
+    color: #ffffff;
+  }
+
+  .config-step h3 {
+    margin: 0 0 18px 0;
+    font-size: 15px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    letter-spacing: -0.01em;
+  }
+
+  .step-badge {
+    display: flex;
+    width: 24px;
+    height: 24px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--color-primary);
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: bold;
+  }
+
+  .modules-grid {
+    display: grid;
+    gap: 10px;
+  }
+
+  .module-opt {
+    display: block;
+    cursor: pointer;
+  }
+
+  .module-opt input[type="checkbox"] {
+    display: none;
+  }
+
+  .opt-card {
+    display: flex;
+    gap: 16px;
+    padding: 14px 18px;
+    border-radius: 12px;
+    border: 1px solid var(--color-outline-strong);
+    background: rgba(255, 255, 255, 0.02);
+    transition: background 300ms, border-color 300ms, transform 200ms;
+  }
+
+  .opt-icon {
+    display: flex;
+    width: 38px;
+    height: 38px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--color-on-surface-muted);
+    flex-shrink: 0;
+    transition: background 300ms, color 300ms;
+  }
+
+  .opt-copy {
+    display: grid;
+    gap: 2px;
+  }
+
+  .opt-copy strong {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-on-surface);
+  }
+
+  .opt-copy small {
+    font-size: 12px;
+    color: var(--color-on-surface-muted);
+    line-height: 1.4;
+  }
+
+  /* Active states for module selections */
+  .module-opt input:checked + .opt-card {
+    border-color: rgba(41, 151, 255, 0.35);
+    background: rgba(41, 151, 255, 0.05);
+  }
+
+  .module-opt input:checked + .opt-card .opt-icon {
+    background: rgba(41, 151, 255, 0.15);
+    color: var(--color-primary-soft);
+  }
+
+  .module-opt .opt-card:hover {
+    transform: translateX(3px);
+    border-color: var(--color-outline-strong);
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  /* Stepper scale section */
+  .scale-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .scale-group {
+    display: grid;
+    gap: 8px;
+  }
+
+  .scale-group label {
+    font-size: 12px;
+    color: var(--color-on-surface-muted);
+    font-weight: 500;
+  }
+
+  .config-select {
+    width: 100%;
+    border: 1px solid var(--color-outline-strong);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--color-on-surface);
+    padding: 12px 14px;
+    outline: none;
+    font-size: 14px;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2386868b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 36px;
+    transition: border-color 200ms, background 200ms;
+  }
+
+  .config-select:focus {
+    border-color: var(--color-primary);
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+
+  /* Sidebar styling */
+  .configurator-sidebar {
+    background: rgba(0, 0, 0, 0.2);
+    border-left: 1px solid var(--color-outline);
+    padding: clamp(24px, 4vw, 40px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .summary-card {
+    display: grid;
+    gap: 20px;
+  }
+
+  .summary-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--color-primary-soft);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .summary-metric {
+    display: grid;
+    gap: 4px;
+  }
+
+  .metric-label {
+    font-size: 12px;
+    color: var(--color-on-surface-muted);
+  }
+
+  .summary-metric strong {
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 700;
+    line-height: 1;
+    color: #ffffff;
+    font-family: var(--font-display);
+    letter-spacing: -0.03em;
+  }
+
+  .metric-sub {
+    font-size: 11px;
+    color: var(--color-primary-soft);
+  }
+
+  .summary-details {
+    display: grid;
+    gap: 10px;
+    border-block: 1px solid rgba(255, 255, 255, 0.06);
+    padding-block: 16px;
+  }
+
+  .recommendation-card {
+    display: grid;
+    gap: 7px;
+    padding: 16px;
+    border: 1px solid rgba(41, 151, 255, 0.16);
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgba(41, 151, 255, 0.1), rgba(255, 255, 255, 0.025));
+  }
+
+  .recommendation-card span {
+    color: var(--color-primary-soft);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .recommendation-card strong {
+    color: var(--color-on-surface);
+    font-size: 16px;
+    line-height: 1.25;
+  }
+
+  .recommendation-card p,
+  .recommendation-card small {
+    margin: 0;
+    color: var(--color-on-surface-muted);
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .recommendation-card small {
+    color: var(--color-primary-soft);
+    opacity: 0.82;
+  }
+
+  .detail-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+  }
+
+  .detail-item span {
+    color: var(--color-on-surface-muted);
+  }
+
+  .detail-item strong {
+    color: var(--color-on-surface);
+    font-weight: 500;
+  }
+
+  .tech-stack-wrap {
+    display: grid;
+    gap: 8px;
+  }
+
+  .tech-stack-wrap span {
+    font-size: 12px;
+    color: var(--color-on-surface-muted);
+  }
+
+  .tech-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .tech-tag-badge {
+    font-size: 11px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #d1d1d6;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-family: var(--font-sans);
+  }
+
+  .sidebar-tip {
+    font-size: 11px;
+    color: var(--color-on-surface-muted);
+    text-align: center;
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  /* Utility margin */
+  .mt-6 {
+    margin-top: 24px;
+  }
+
+  /* Status message styles */
+  :global(.text-success) {
+    color: #30d158 !important;
+  }
+
+  @media (max-width: 900px) {
+    .configurator {
+      grid-template-columns: 1fr;
+    }
+    .configurator-sidebar {
+      border-left: none;
+      border-top: 1px solid var(--color-outline);
+    }
+  }
+
+  @media (max-width: 520px) {
+    .scale-row {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

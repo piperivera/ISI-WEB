@@ -1,0 +1,44 @@
+---
+import Icon from "./Icon.astro";
+
+interface Props {
+  title: string;
+  text: string;
+  icon: string;
+}
+
+const { title, text, icon } = Astro.props;
+---
+
+<article class="card value-card">
+  <span class="icon-box">
+    <Icon name={icon} />
+  </span>
+  <h3>{title}</h3>
+  <p>{text}</p>
+</article>
+
+<style>
+  .value-card {
+    display: grid;
+    align-content: start;
+    gap: 16px;
+    padding: 28px;
+  }
+
+  h3 {
+    margin: 4px 0 0;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+
+  p {
+    margin: 0;
+    color: var(--color-on-surface-muted);
+    font-size: 15px;
+    line-height: 1.6;
+    letter-spacing: -0.01em;
+  }
+</style>

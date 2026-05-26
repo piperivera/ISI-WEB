@@ -1,0 +1,650 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ButtonLink from "../components/ButtonLink.astro";
+import CtaBand from "../components/CtaBand.astro";
+import SectionIntro from "../components/SectionIntro.astro";
+import ServiceAccordion from "../components/ServiceAccordion.astro";
+import Icon from "../components/Icon.astro";
+import ProjectConfigurator from "../components/ProjectConfigurator.astro";
+import { media, services } from "../data/site";
+
+const demoScenarios = [
+  {
+    key: "procesos",
+    label: "Procesos",
+    icon: "cpu",
+    title: "Automatización sin perder control",
+    text: "Ideal cuando el equipo repite tareas, copia datos entre sistemas o pierde tiempo aprobando manualmente.",
+    before: "Procesos dispersos y tareas repetidas.",
+    path: "Flujo automatizado con validación humana.",
+    result: "Más velocidad, menos reproceso y mejor seguimiento.",
+    tags: ["IA útil", "Integraciones", "Métricas visibles"]
+  },
+  {
+    key: "infraestructura",
+    label: "Infraestructura",
+    icon: "cloud",
+    title: "Base segura para crecer",
+    text: "Pensada para empresas que necesitan estabilidad, monitoreo y ambientes listos para nuevas plataformas.",
+    before: "Servidores, accesos y respaldos sin una ruta clara.",
+    path: "Arquitectura por fases con monitoreo y continuidad.",
+    result: "Operación más estable y preparada para escalar.",
+    tags: ["Nube", "Observabilidad", "Respaldo"]
+  },
+  {
+    key: "seguridad",
+    label: "Seguridad",
+    icon: "shield",
+    title: "Protección desde el diseño",
+    text: "Útil cuando hay datos sensibles, usuarios externos, varias sedes o sistemas que no pueden improvisar.",
+    before: "Riesgos, permisos y dependencias difíciles de ver.",
+    path: "Controles, accesos y respuesta documentada.",
+    result: "Más confianza para operar y tomar decisiones.",
+    tags: ["Accesos", "Riesgo", "Continuidad"]
+  }
+];
+
+const trustItems = [
+  {
+    title: "Seguridad desde diseño",
+    badge: "Buenas prácticas",
+    text: "Revisamos accesos, datos, continuidad y riesgos desde la primera definición del alcance.",
+    icon: "shield"
+  },
+  {
+    title: "Alcance transparente",
+    badge: "Sin sorpresas",
+    text: "Trabajamos con fases, entregables y criterios de éxito que el cliente puede seguir.",
+    icon: "scan"
+  },
+  {
+    title: "Documentación entregable",
+    badge: "Transferible",
+    text: "Cada solución queda explicada para operación, soporte y futuras mejoras.",
+    icon: "layers"
+  },
+  {
+    title: "Acompañamiento humano",
+    badge: "Cercanía",
+    text: "Explicamos lo técnico en lenguaje claro para que el equipo se sienta acompañado.",
+    icon: "spark"
+  }
+];
+---
+
+<BaseLayout
+  title="Servicios | ISI"
+  description="Servicios de arquitectura tecnológica, infraestructura inteligente, conectividad, IA y seguridad."
+  active="servicios"
+>
+  <section class="page-hero">
+    <div class="shell hero-grid">
+      <div class="hero-copy" data-reveal>
+        <span class="eyebrow">Ingeniería de soluciones</span>
+        <h1 class="page-title">Arquitectura tecnológica para la <span class="text-gradient">era inteligente</span></h1>
+        <p class="lead">
+          Soluciones de conectividad, infraestructura, software e IA diseñadas para transformar complejidad empresarial en sistemas confiables.
+        </p>
+        <ButtonLink href="/contacto/" label="Hablar con expertos" />
+      </div>
+      <div class="node-visual panel" data-reveal style="--reveal-delay: 120ms">
+        <img src={media.networkNodes} alt="Nodos tecnológicos azules conectados como una red empresarial" loading="eager" fetchpriority="high" decoding="async" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="shell services-layout">
+      <div class="services-intro" data-reveal>
+        <SectionIntro
+          eyebrow="Portafolio técnico"
+          title="Servicios estandarizados bajo una misma arquitectura"
+          text="Cada línea de trabajo comparte criterios de seguridad, escalabilidad, observabilidad y experiencia operacional."
+        />
+      </div>
+      <div class="service-accordion" data-service-accordion>
+        {services.map((service, index) => (
+          <div data-reveal style={`--reveal-delay: ${index * 60}ms`}>
+            <ServiceAccordion {...service} index={index} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section demo-section" id="demo-servicios" data-service-demo>
+    <div class="shell demo-grid">
+      <div class="demo-copy" data-reveal>
+        <span class="eyebrow">Demo guiada</span>
+        <h2 class="section-title">Prueba una ruta antes de pedir una propuesta</h2>
+        <p class="lead">
+          Elige un escenario y mira cómo ISI lo ordenaría: problema, camino recomendado y resultado esperado.
+        </p>
+        <div class="demo-tabs" role="tablist" aria-label="Demos guiadas de servicios ISI">
+          {demoScenarios.map((demo, index) => (
+            <button
+              class:list={["demo-tab", { active: index === 0 }]}
+              type="button"
+              role="tab"
+              id={`demo-tab-${demo.key}`}
+              aria-selected={index === 0 ? "true" : "false"}
+              aria-controls={`demo-panel-${demo.key}`}
+              tabindex={index === 0 ? "0" : "-1"}
+              data-demo-tab={demo.key}
+            >
+              <Icon name={demo.icon} size={17} />
+              <span>{demo.label}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div class="demo-panel panel" data-reveal style="--reveal-delay: 120ms">
+        {demoScenarios.map((demo, index) => (
+          <article
+            class:list={["demo-view", { active: index === 0 }]}
+            id={`demo-panel-${demo.key}`}
+            role="tabpanel"
+            aria-labelledby={`demo-tab-${demo.key}`}
+            data-demo-view={demo.key}
+            hidden={index !== 0}
+          >
+            <span class="demo-kicker"><Icon name={demo.icon} size={15} /> {demo.label}</span>
+            <h3>{demo.title}</h3>
+            <p>{demo.text}</p>
+
+            <div class="demo-flow" aria-label={`Ruta sugerida para ${demo.label}`}>
+              <div class="flow-step">
+                <span>Hoy</span>
+                <p>{demo.before}</p>
+              </div>
+              <div class="flow-step active">
+                <span>Ruta ISI</span>
+                <p>{demo.path}</p>
+              </div>
+              <div class="flow-step">
+                <span>Resultado</span>
+                <p>{demo.result}</p>
+              </div>
+            </div>
+
+            <div class="demo-tags" aria-label="Componentes sugeridos">
+              {demo.tags.map((tag) => <span>{tag}</span>)}
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section feature-section">
+    <div class="shell feature-grid">
+      <div class="feature-copy" data-reveal>
+        <span class="eyebrow">Laboratorio digital</span>
+        <h2 class="section-title">Simulación antes de producción</h2>
+        <p class="lead">
+          Probamos escenarios técnicos con modelos, prototipos y mediciones tempranas para reducir riesgo antes de comprometer inversión.
+        </p>
+        <ul class="feature-list">
+          <li><Icon name="check" size={16} /> Arquitecturas revisadas por impacto y dependencias.</li>
+          <li><Icon name="check" size={16} /> Priorización por valor, riesgo y velocidad.</li>
+          <li><Icon name="check" size={16} /> Documentación clara para operación y continuidad.</li>
+        </ul>
+      </div>
+      <div class="media-frame" data-reveal style="--reveal-delay: 120ms">
+        <img src={media.digitalLab} alt="Laboratorio digital con modelos holográficos y visualizaciones técnicas" loading="lazy" decoding="async" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt trust-section">
+    <div class="shell trust-layout">
+      <div class="trust-copy" data-reveal>
+        <SectionIntro
+          eyebrow="Confianza"
+          title="Compromisos claros antes de empezar"
+          text="La tecnología se siente mejor cuando el cliente entiende qué se hará, por qué importa y cómo se cuidará la operación."
+        />
+      </div>
+
+      <div class="trust-cards" aria-label="Compromisos de confianza de ISI">
+        {trustItems.map((item, index) => (
+          <article class="card trust-card" data-reveal style={`--reveal-delay: ${index * 70}ms`}>
+            <div class="trust-card-head">
+              <span class="icon-box"><Icon name={item.icon} /></span>
+              <span class="trust-badge">{item.badge}</span>
+            </div>
+            <h3>{item.title}</h3>
+            <p>{item.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt" id="guia-rapida">
+    <div class="shell">
+      <div data-reveal class="configurator-wrap">
+        <ProjectConfigurator />
+      </div>
+    </div>
+  </section>
+
+  <CtaBand title="¿Listo para arquitectar su futuro?" text="Diseñemos una solución técnica con alcance claro, prioridades y una primera ruta de implementación." />
+</BaseLayout>
+
+<script>
+  const accordion = document.querySelector("[data-service-accordion]");
+
+  // Open first item by default
+  const firstItem = accordion?.querySelector("[data-accordion-item]");
+  if (firstItem) {
+    firstItem.classList.add("is-open");
+    firstItem.querySelector("[data-accordion-trigger]")?.setAttribute("aria-expanded", "true");
+  }
+
+  accordion?.addEventListener("click", (event) => {
+    const trigger = (event.target as HTMLElement).closest("[data-accordion-trigger]");
+    if (!trigger) return;
+
+    const item = trigger.closest("[data-accordion-item]");
+    if (!item) return;
+
+    const isOpen = item.classList.contains("is-open");
+
+    accordion.querySelectorAll("[data-accordion-item]").forEach((el) => {
+      el.classList.remove("is-open");
+      el.querySelector("[data-accordion-trigger]")?.setAttribute("aria-expanded", "false");
+    });
+
+    if (!isOpen) {
+      item.classList.add("is-open");
+      trigger.setAttribute("aria-expanded", "true");
+    }
+  });
+
+  const demoSection = document.querySelector("[data-service-demo]");
+
+  if (demoSection) {
+    const demoTabs = Array.from(demoSection.querySelectorAll("[data-demo-tab]")) as HTMLElement[];
+    const demoViews = demoSection.querySelectorAll("[data-demo-view]");
+
+    function activateDemo(tab: HTMLElement, shouldFocus = false) {
+      const selected = tab.getAttribute("data-demo-tab");
+
+      demoTabs.forEach((item) => {
+        const isActive = item === tab;
+        item.classList.toggle("active", isActive);
+        item.setAttribute("aria-selected", String(isActive));
+        item.setAttribute("tabindex", isActive ? "0" : "-1");
+      });
+
+      demoViews.forEach((view) => {
+        const isActive = view.getAttribute("data-demo-view") === selected;
+        view.classList.toggle("active", isActive);
+        if (isActive) {
+          view.removeAttribute("hidden");
+        } else {
+          view.setAttribute("hidden", "");
+        }
+      });
+
+      if (shouldFocus) tab.focus();
+    }
+
+    demoTabs.forEach((tab, index) => {
+      tab.addEventListener("click", () => activateDemo(tab));
+
+      tab.addEventListener("keydown", (event) => {
+        const key = event.key;
+        if (!["ArrowRight", "ArrowLeft", "Home", "End"].includes(key)) return;
+
+        event.preventDefault();
+        const lastIndex = demoTabs.length - 1;
+        let nextIndex = index;
+
+        if (key === "ArrowRight") nextIndex = index === lastIndex ? 0 : index + 1;
+        if (key === "ArrowLeft") nextIndex = index === 0 ? lastIndex : index - 1;
+        if (key === "Home") nextIndex = 0;
+        if (key === "End") nextIndex = lastIndex;
+
+        activateDemo(demoTabs[nextIndex], true);
+      });
+    });
+  }
+</script>
+
+<style>
+  .page-hero {
+    padding-block: clamp(64px, 9vw, 120px);
+    border-bottom: 1px solid var(--color-outline);
+  }
+
+  .hero-grid,
+  .feature-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(340px, 0.9fr);
+    gap: clamp(40px, 7vw, 80px);
+    align-items: center;
+  }
+
+  .hero-copy,
+  .feature-copy {
+    display: grid;
+    gap: 20px;
+  }
+
+  .node-visual {
+    overflow: hidden;
+    padding: 24px;
+  }
+
+  .node-visual img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: contain;
+    opacity: 0.85;
+  }
+
+  .services-layout {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: clamp(40px, 6vw, 72px);
+    align-items: start;
+  }
+
+  .services-intro {
+    position: sticky;
+    top: 80px;
+  }
+
+  .services-intro :global(.section-intro) {
+    margin-bottom: 0;
+  }
+
+  .service-accordion {
+    display: grid;
+    gap: 8px;
+  }
+
+  .demo-section {
+    background:
+      radial-gradient(ellipse 60% 50% at 72% 22%, rgba(41, 151, 255, 0.08), transparent),
+      var(--color-background);
+  }
+
+  .demo-grid {
+    display: grid;
+    grid-template-columns: minmax(300px, 0.72fr) minmax(0, 1fr);
+    gap: clamp(28px, 5vw, 64px);
+    align-items: center;
+  }
+
+  .demo-copy {
+    display: grid;
+    gap: 18px;
+  }
+
+  .demo-tabs {
+    display: grid;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .demo-tab {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    min-height: 48px;
+    padding: 12px 14px;
+    border: 1px solid var(--color-outline);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.035);
+    color: var(--color-on-surface-muted);
+    cursor: pointer;
+    text-align: left;
+    transition: transform 200ms ease, border-color 200ms ease, background 200ms ease, color 200ms ease;
+  }
+
+  .demo-tab:hover,
+  .demo-tab.active {
+    border-color: rgba(41, 151, 255, 0.28);
+    background: rgba(41, 151, 255, 0.08);
+    color: var(--color-on-surface);
+  }
+
+  .demo-tab:hover {
+    transform: translateX(3px);
+  }
+
+  .demo-tab svg {
+    color: var(--color-primary);
+  }
+
+  .demo-panel {
+    min-height: 420px;
+    padding: clamp(24px, 4vw, 38px);
+  }
+
+  .demo-view {
+    display: none;
+    gap: 20px;
+  }
+
+  .demo-view.active {
+    display: grid;
+  }
+
+  .demo-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    width: fit-content;
+    color: var(--color-primary-soft);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .demo-view h3 {
+    margin: 0;
+    color: var(--color-on-surface);
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+  }
+
+  .demo-view > p {
+    max-width: 640px;
+    margin: 0;
+    color: var(--color-on-surface-muted);
+    font-size: 16px;
+    line-height: 1.65;
+  }
+
+  .demo-flow {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 4px;
+  }
+
+  .flow-step {
+    display: grid;
+    gap: 8px;
+    padding: 18px;
+    border: 1px solid var(--color-outline);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .flow-step.active {
+    border-color: rgba(41, 151, 255, 0.3);
+    background: rgba(41, 151, 255, 0.08);
+  }
+
+  .flow-step span {
+    color: var(--color-primary-soft);
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .flow-step p {
+    margin: 0;
+    color: var(--color-on-surface);
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .demo-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .demo-tags span,
+  .trust-badge {
+    border: 1px solid rgba(41, 151, 255, 0.18);
+    border-radius: 999px;
+    background: rgba(41, 151, 255, 0.08);
+    color: var(--color-primary-soft);
+    padding: 6px 10px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .feature-section {
+  }
+
+  .feature-list {
+    display: grid;
+    gap: 12px;
+    padding: 0;
+    margin: 0;
+    color: var(--color-on-surface-muted);
+    list-style: none;
+  }
+
+  .feature-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 15px;
+    line-height: 1.6;
+    letter-spacing: -0.01em;
+  }
+
+  .feature-list svg {
+    flex: 0 0 auto;
+    margin-top: 3px;
+    color: var(--color-primary);
+  }
+
+  .media-frame img {
+    width: 100%;
+    aspect-ratio: 16 / 11;
+    object-fit: cover;
+  }
+
+  .trust-layout {
+    display: grid;
+    grid-template-columns: 320px minmax(0, 1fr);
+    gap: clamp(32px, 6vw, 72px);
+    align-items: start;
+  }
+
+  .trust-copy {
+    position: sticky;
+    top: 80px;
+  }
+
+  .trust-copy :global(.section-intro) {
+    margin-bottom: 0;
+  }
+
+  .trust-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .trust-card {
+    display: grid;
+    gap: 16px;
+    padding: 24px;
+  }
+
+  .trust-card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .trust-card h3 {
+    margin: 0;
+    color: var(--color-on-surface);
+    font-size: 20px;
+    font-weight: 650;
+    letter-spacing: -0.02em;
+  }
+
+  .trust-card p {
+    margin: 0;
+    color: var(--color-on-surface-muted);
+    font-size: 14px;
+    line-height: 1.65;
+  }
+
+  @media (max-width: 980px) {
+    .hero-grid,
+    .feature-grid,
+    .demo-grid,
+    .trust-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .services-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .services-intro {
+      position: static;
+    }
+
+    .trust-copy {
+      position: static;
+    }
+
+    .services-intro :global(.section-intro) {
+      margin-bottom: 32px;
+    }
+
+    .demo-flow {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .configurator-wrap {
+    max-width: 960px;
+    margin-inline: auto;
+  }
+
+  .configurator-wrap :global(.configurator) {
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+  }
+
+  @media (max-width: 700px) {
+    .demo-flow,
+    .trust-cards {
+      grid-template-columns: 1fr;
+    }
+
+    .demo-panel {
+      min-height: auto;
+    }
+  }
+</style>

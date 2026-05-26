@@ -1,0 +1,69 @@
+---
+import { media } from "../data/site";
+
+interface Props {
+  compact?: boolean;
+}
+
+const { compact = false } = Astro.props;
+---
+
+<a class="brand" href="/" aria-label="Ir al inicio">
+  <span class="brand-mark" aria-hidden="true">
+    <img src={media.logo} alt="" loading="eager" decoding="async" />
+  </span>
+  <span class="brand-copy">
+    <strong>ISI</strong>
+    {!compact && <small>Ingenieros de Soluciones Inteligentes</small>}
+  </span>
+</a>
+
+<style>
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .brand-mark {
+    display: grid;
+    width: 36px;
+    height: 36px;
+    place-items: center;
+    border-radius: 10px;
+    background: var(--color-surface-high);
+    overflow: hidden;
+  }
+
+  .brand-mark img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .brand-copy {
+    display: grid;
+    gap: 1px;
+  }
+
+  .brand-copy strong {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .brand-copy small {
+    color: var(--color-on-surface-muted);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 1.2;
+  }
+
+  @media (max-width: 520px) {
+    .brand-copy small {
+      display: none;
+    }
+  }
+</style>

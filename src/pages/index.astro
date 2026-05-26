@@ -1,0 +1,600 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ButtonLink from "../components/ButtonLink.astro";
+import CtaBand from "../components/CtaBand.astro";
+import Icon from "../components/Icon.astro";
+import InteractiveTerminal from "../components/InteractiveTerminal.astro";
+import { testimonials } from "../data/site";
+import TestimonialCard from "../components/TestimonialCard.astro";
+
+const trustSignals = [
+  "Ruta clara",
+  "Ruta por fases",
+  "Lenguaje simple"
+];
+
+const solutions = [
+  {
+    title: "Software que ordena procesos",
+    text: "Aplicaciones, plataformas internas y sistemas conectados para trabajar con menos fricción.",
+    icon: "layers"
+  },
+  {
+    title: "IA y automatización útil",
+    text: "Asistentes, flujos automáticos y análisis de datos aplicados a tareas reales del negocio.",
+    icon: "brain"
+  },
+  {
+    title: "Infraestructura segura",
+    text: "Nube, conectividad y seguridad para que la operación crezca con estabilidad.",
+    icon: "shield"
+  }
+];
+
+const steps = [
+  {
+    number: "01",
+    title: "Entendemos",
+    text: "Escuchamos el reto, el negocio y lo que el usuario necesita resolver."
+  },
+  {
+    number: "02",
+    title: "Diseñamos",
+    text: "Creamos una ruta clara con prioridades, fases y criterios de éxito."
+  },
+  {
+    number: "03",
+    title: "Construimos",
+    text: "Avanzamos por entregas visibles, con pruebas y documentación."
+  }
+];
+---
+
+<BaseLayout
+  title="ISI | Soluciones inteligentes para empresas"
+  description="ISI diseña soluciones inteligentes de software, infraestructura, conectividad e IA para empresas que buscan crecer con tecnología clara y confiable."
+  active="inicio"
+>
+  <section class="hero" data-hero>
+    <div class="shell hero-grid">
+      <div class="hero-copy" data-reveal>
+        <span class="eyebrow">Ingeniería inteligente para crecer</span>
+        <h1 class="display-title"><span class="text-gradient">Tecnología clara</span> para empresas que quieren avanzar</h1>
+        <p class="lead">
+          ISI diseña software, automatización, infraestructura y conectividad con una ruta fácil de entender: primero ordenamos el reto, luego construimos por etapas.
+        </p>
+        <div class="hero-actions">
+          <ButtonLink href="/contacto/" label="Empezar ahora" />
+          <ButtonLink href="/servicios/" label="Ver servicios" variant="secondary" />
+        </div>
+        <ul class="trust-list" aria-label="Beneficios principales de ISI">
+          {trustSignals.map((signal) => (
+            <li><Icon name="check" size={15} /> {signal}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section terminal-section">
+    <div class="shell terminal-layout">
+      <div class="terminal-heading" data-reveal>
+        <span class="eyebrow">Panel interactivo</span>
+        <h2 class="section-title">Mira cómo ISI organiza una solución</h2>
+        <p class="lead">
+          Mantuvimos la experiencia tipo bash, pero con mensajes más claros para que se entienda qué pasa en cada etapa.
+        </p>
+      </div>
+      <InteractiveTerminal />
+    </div>
+  </section>
+
+  <section class="section section-alt solutions-section" id="soluciones">
+    <div class="shell section-stack">
+      <div class="section-heading" data-reveal>
+        <span class="eyebrow">Qué hacemos</span>
+        <h2 class="section-title">Soluciones que se explican fácil</h2>
+        <p class="lead">
+          El objetivo es que cada decisión técnica tenga sentido para el negocio y para las personas que usarán la solución.
+        </p>
+      </div>
+
+      <div class="solution-grid">
+        {solutions.map((solution, index) => (
+          <article class="card solution-card" data-reveal style={`--reveal-delay: ${index * 90}ms`}>
+            <span class="icon-box"><Icon name={solution.icon} /></span>
+            <h3>{solution.title}</h3>
+            <p>{solution.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section process-section">
+    <div class="shell process-grid">
+      <div class="process-copy" data-reveal>
+        <span class="eyebrow">Cómo trabajamos</span>
+        <h2 class="section-title">Una ruta simple, sin saturar al cliente</h2>
+        <p class="lead">
+          Menos confusión, más claridad. Cada proyecto se organiza en pasos visibles para que siempre sepas qué sigue.
+        </p>
+        <ButtonLink href="/nosotros/" label="Conocer metodología" variant="secondary" />
+      </div>
+
+      <div class="step-grid">
+        {steps.map((step, index) => (
+          <article class="step-card" data-reveal style={`--reveal-delay: ${index * 90}ms`}>
+            <span>{step.number}</span>
+            <h3>{step.title}</h3>
+            <p>{step.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt testimonials-section" id="testimonios">
+    <div class="shell testimonials-layout">
+      <div class="testimonials-copy" data-reveal>
+        <span class="eyebrow">Lo que dicen nuestros clientes</span>
+        <h2 class="section-title">Historias de éxito reales</h2>
+        <p class="lead">
+          Empresas que confiaron en ISI para convertir desafíos tecnológicos en avances claros, medibles y sostenibles.
+        </p>
+        <div class="testimonial-note">
+          <Icon name="check" size={15} />
+          <span>Casos resumidos por tipo de solución</span>
+        </div>
+        <div class="carousel-controls" aria-label="Controles de historias de éxito">
+          <button class="carousel-btn prev" type="button" aria-label="Ver historia anterior" data-carousel-prev>
+            <span aria-hidden="true">‹</span>
+          </button>
+          <button class="carousel-btn" type="button" aria-label="Ver historia siguiente" data-carousel-next>
+            <span aria-hidden="true">›</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="testimonials-carousel" data-testimonial-carousel>
+        <div class="testimonials-track" role="list" aria-label="Historias de éxito de clientes" tabindex="0" data-carousel-track>
+        {testimonials.map((testimonial, index) => (
+          <div class="testimonial-slide" role="listitem" data-reveal style={`--reveal-delay: ${index * 80}ms`}>
+            <TestimonialCard {...testimonial} />
+          </div>
+        ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand
+    title="Cuéntanos tu reto y diseñamos una ruta clara"
+    text="Con una primera conversación podemos entender qué necesitas, qué conviene priorizar y cómo llevarlo a una solución real."
+  />
+</BaseLayout>
+
+<script>
+  const carousel = document.querySelector("[data-testimonial-carousel]");
+
+  if (carousel) {
+    const track = carousel.querySelector("[data-carousel-track]") as HTMLElement;
+    const prevButton = document.querySelector("[data-carousel-prev]") as HTMLButtonElement;
+    const nextButton = document.querySelector("[data-carousel-next]") as HTMLButtonElement;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let autoplayTimer: number | undefined;
+
+    function getScrollAmount() {
+      const card = track.querySelector(".testimonial-slide") as HTMLElement;
+      if (card) return card.offsetWidth + 16;
+      return Math.max(280, track.clientWidth * 0.82);
+    }
+
+    function getMaxScroll() {
+      return Math.max(0, track.scrollWidth - track.clientWidth);
+    }
+
+    function updateButtons() {
+      const hasOverflow = getMaxScroll() > 4;
+      prevButton.disabled = !hasOverflow;
+      nextButton.disabled = !hasOverflow;
+    }
+
+    function goNext() {
+      const maxScroll = getMaxScroll();
+      if (track.scrollLeft >= maxScroll - 4) {
+        track.scrollTo({ left: 0, behavior: "smooth" });
+        return;
+      }
+      track.scrollBy({ left: getScrollAmount(), behavior: "smooth" });
+    }
+
+    function goPrev() {
+      const maxScroll = getMaxScroll();
+      if (track.scrollLeft <= 4) {
+        track.scrollTo({ left: maxScroll, behavior: "smooth" });
+        return;
+      }
+      track.scrollBy({ left: -getScrollAmount(), behavior: "smooth" });
+    }
+
+    function stopAutoplay() {
+      if (autoplayTimer) {
+        window.clearInterval(autoplayTimer);
+        autoplayTimer = undefined;
+      }
+    }
+
+    function startAutoplay() {
+      stopAutoplay();
+      if (reduceMotion.matches || getMaxScroll() <= 4) return;
+      autoplayTimer = window.setInterval(goNext, 4600);
+    }
+
+    function restartAutoplay() {
+      stopAutoplay();
+      startAutoplay();
+    }
+
+    prevButton?.addEventListener("click", () => {
+      goPrev();
+      restartAutoplay();
+    });
+
+    nextButton?.addEventListener("click", () => {
+      goNext();
+      restartAutoplay();
+    });
+
+    track?.addEventListener("scroll", updateButtons, { passive: true });
+    carousel.addEventListener("pointerenter", stopAutoplay);
+    carousel.addEventListener("pointerleave", startAutoplay);
+    track.addEventListener("focusin", stopAutoplay);
+    track.addEventListener("focusout", startAutoplay);
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) stopAutoplay();
+      else startAutoplay();
+    });
+    reduceMotion.addEventListener("change", restartAutoplay);
+    window.addEventListener("resize", () => {
+      updateButtons();
+      restartAutoplay();
+    });
+    updateButtons();
+    startAutoplay();
+  }
+</script>
+
+<style>
+  .hero {
+    position: relative;
+    display: grid;
+    min-height: min(720px, calc(100vh - 52px));
+    align-items: center;
+    padding-block: clamp(64px, 9vw, 108px);
+    overflow: hidden;
+    border-bottom: 1px solid var(--color-outline);
+    background:
+      linear-gradient(180deg, rgba(5, 5, 7, 0.42), rgba(0, 0, 0, 0.82)),
+      radial-gradient(ellipse 70% 50% at 50% 8%, rgba(41, 151, 255, 0.08), transparent);
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(28px, 5vw, 52px);
+    justify-items: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .hero-copy {
+    display: grid;
+    justify-items: center;
+    gap: 20px;
+    max-width: 840px;
+  }
+
+  .hero-copy .lead {
+    max-width: 680px;
+  }
+
+  .hero-actions,
+  .trust-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .hero-actions {
+    justify-content: center;
+    margin-top: 8px;
+  }
+
+  .trust-list {
+    justify-content: center;
+    padding: 0;
+    margin: 4px 0 0;
+    list-style: none;
+  }
+
+  .trust-list li {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    min-height: 34px;
+    padding: 7px 12px;
+    border: 1px solid var(--color-outline);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--color-on-surface-muted);
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  .trust-list svg {
+    color: var(--color-primary);
+  }
+
+  .terminal-section {
+    padding-block: clamp(56px, 8vw, 96px);
+    background:
+      radial-gradient(ellipse 60% 42% at 76% 0%, rgba(41, 151, 255, 0.08), transparent),
+      rgba(8, 8, 10, 0.72);
+  }
+
+  .terminal-layout {
+    display: grid;
+    gap: 28px;
+  }
+
+  .terminal-heading {
+    display: grid;
+    gap: 14px;
+    max-width: 720px;
+  }
+
+  .section-stack {
+    display: grid;
+    gap: 36px;
+  }
+
+  .section-heading,
+  .process-copy {
+    display: grid;
+    gap: 14px;
+    max-width: 680px;
+  }
+
+  .solution-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .solution-card {
+    display: grid;
+    align-content: start;
+    gap: 16px;
+    padding: 28px;
+  }
+
+  .solution-card h3,
+  .step-card h3 {
+    margin: 0;
+    color: var(--color-on-surface);
+    font-size: clamp(18px, 3vw, 21px);
+    font-weight: 600;
+    line-height: 1.18;
+    letter-spacing: -0.02em;
+  }
+
+  .solution-card p,
+  .step-card p {
+    margin: 0;
+    color: var(--color-on-surface-muted);
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  .process-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+    gap: clamp(36px, 7vw, 80px);
+    align-items: center;
+  }
+
+  .process-copy :global(.btn) {
+    width: fit-content;
+    margin-top: 8px;
+  }
+
+  .step-grid {
+    display: grid;
+    gap: 14px;
+  }
+
+  .step-card {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    column-gap: 16px;
+    row-gap: 4px;
+    align-items: start;
+    padding: 22px;
+    border: 1px solid var(--color-outline);
+    border-radius: 16px;
+    background: rgba(22, 22, 24, 0.55);
+  }
+
+  .step-card > span {
+    grid-row: 1 / span 2;
+    display: grid;
+    width: 40px;
+    height: 40px;
+    place-items: center;
+    border-radius: 12px;
+    background: rgba(41, 151, 255, 0.1);
+    color: var(--color-primary-soft);
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .testimonials-layout {
+    display: grid;
+    grid-template-columns: minmax(280px, 0.42fr) minmax(0, 1fr);
+    gap: clamp(28px, 6vw, 72px);
+    align-items: start;
+  }
+
+  .testimonials-copy {
+    position: sticky;
+    top: 80px;
+    display: grid;
+    gap: 16px;
+    max-width: 420px;
+  }
+
+  .testimonial-note {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    width: fit-content;
+    padding: 8px 12px;
+    border: 1px solid rgba(41, 151, 255, 0.18);
+    border-radius: 999px;
+    background: rgba(41, 151, 255, 0.08);
+    color: var(--color-primary-soft);
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .carousel-controls {
+    display: flex;
+    margin-top: 4px;
+    gap: 10px;
+  }
+
+  .carousel-btn {
+    display: grid;
+    width: 42px;
+    height: 42px;
+    place-items: center;
+    border: 1px solid var(--color-outline-strong);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--color-on-surface);
+    cursor: pointer;
+    transition: background 180ms ease, border-color 180ms ease, opacity 180ms ease;
+  }
+
+  .carousel-btn span {
+    display: block;
+    margin-top: -2px;
+    font-size: 26px;
+    font-weight: 500;
+    line-height: 1;
+  }
+
+  .carousel-btn:hover {
+    border-color: rgba(41, 151, 255, 0.3);
+    background: rgba(41, 151, 255, 0.12);
+  }
+
+  .carousel-btn:disabled {
+    cursor: default;
+    opacity: 0.35;
+  }
+
+  .testimonials-carousel {
+    position: relative;
+    min-width: 0;
+    padding: 2px 0;
+  }
+
+  .testimonials-track {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(340px, 420px);
+    align-items: stretch;
+    gap: 16px;
+    overflow-x: auto;
+    padding: 2px 2px 18px;
+    scroll-padding-inline: 2px;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .testimonials-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .testimonial-slide {
+    display: grid;
+    scroll-snap-align: start;
+  }
+
+  .testimonial-slide :global(.testimonial-card) {
+    height: 100%;
+  }
+
+  @media (max-width: 1020px) {
+    .hero-grid,
+    .process-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-copy {
+      max-width: 760px;
+    }
+  }
+
+  @media (max-width: 980px) {
+    .solution-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 680px) {
+    .solution-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 680px) {
+    .hero-actions,
+    .trust-list {
+      display: grid;
+    }
+
+    .process-copy :global(.btn) {
+      width: 100%;
+    }
+
+    .step-card {
+      grid-template-columns: 1fr;
+    }
+
+    .step-card > span {
+      grid-row: auto;
+    }
+
+    .testimonials-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .testimonials-copy {
+      position: static;
+      max-width: 680px;
+    }
+
+    .carousel-controls {
+      width: 100%;
+    }
+
+    .testimonials-track {
+      grid-auto-columns: minmax(280px, 86vw);
+    }
+  }
+
+</style>

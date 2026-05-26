@@ -1,0 +1,46 @@
+---
+interface Props {
+  name: string;
+  size?: number;
+  strokeWidth?: number;
+}
+
+const { name, size = 22, strokeWidth = 2 } = Astro.props;
+
+const icons: Record<string, string> = {
+  arrow: '<path d="M5 12h14"></path><path d="m13 5 7 7-7 7"></path>',
+  brain: '<path d="M9 3a3 3 0 0 0-3 3v1a4 4 0 0 0 0 8v1a3 3 0 0 0 3 3"></path><path d="M15 3a3 3 0 0 1 3 3v1a4 4 0 0 1 0 8v1a3 3 0 0 1-3 3"></path><path d="M9 3v18"></path><path d="M15 3v18"></path><path d="M6 8h3"></path><path d="M15 8h3"></path><path d="M6 16h3"></path><path d="M15 16h3"></path>',
+  check: '<path d="m20 6-11 11-5-5"></path>',
+  chevron: '<path d="m6 9 6 6 6-6"></path>',
+  cloud: '<path d="M17.5 19H7a5 5 0 1 1 1.6-9.74A6 6 0 0 1 20 12a3.5 3.5 0 0 1-2.5 7Z"></path>',
+  cpu: '<rect x="7" y="7" width="10" height="10" rx="2"></rect><path d="M9 1v3"></path><path d="M15 1v3"></path><path d="M9 20v3"></path><path d="M15 20v3"></path><path d="M20 9h3"></path><path d="M20 15h3"></path><path d="M1 9h3"></path><path d="M1 15h3"></path>',
+  layers: '<path d="m12 2 9 5-9 5-9-5 9-5Z"></path><path d="m3 12 9 5 9-5"></path><path d="m3 17 9 5 9-5"></path>',
+  mail: '<rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path>',
+  map: '<path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle>',
+  menu: '<path d="M4 7h16"></path><path d="M4 12h16"></path><path d="M4 17h16"></path>',
+  network: '<circle cx="12" cy="5" r="3"></circle><circle cx="5" cy="19" r="3"></circle><circle cx="19" cy="19" r="3"></circle><path d="M10.7 7.7 6.3 16.3"></path><path d="m13.3 7.7 4.4 8.6"></path><path d="M8 19h8"></path>',
+  phone: '<path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.8 19.8 0 0 1 3.1 5.18 2 2 0 0 1 5.11 3h3a2 2 0 0 1 2 1.72c.12.9.32 1.78.59 2.63a2 2 0 0 1-.45 2.11L9 10.7a16 16 0 0 0 4.3 4.3l1.24-1.24a2 2 0 0 1 2.11-.45c.85.27 1.73.47 2.63.59A2 2 0 0 1 22 16.92Z"></path>',
+  scan: '<path d="M3 7V5a2 2 0 0 1 2-2h2"></path><path d="M17 3h2a2 2 0 0 1 2 2v2"></path><path d="M21 17v2a2 2 0 0 1-2 2h-2"></path><path d="M7 21H5a2 2 0 0 1-2-2v-2"></path><path d="M7 12h10"></path>',
+  send: '<path d="m22 2-7 20-4-9-9-4 20-7Z"></path><path d="M22 2 11 13"></path>',
+  shield: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"></path><path d="m9 12 2 2 4-5"></path>',
+  spark: '<path d="M12 2v5"></path><path d="M12 17v5"></path><path d="M4.22 4.22 7.76 7.76"></path><path d="m16.24 16.24 3.54 3.54"></path><path d="M2 12h5"></path><path d="M17 12h5"></path><path d="m4.22 19.78 3.54-3.54"></path><path d="m16.24 7.76 3.54-3.54"></path>',
+  star: '<path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2Z"></path>',
+  x: '<path d="M18 6 6 18"></path><path d="m6 6 12 12"></path>'
+};
+
+const path = icons[name] ?? icons.spark;
+---
+
+<svg
+  aria-hidden="true"
+  width={size}
+  height={size}
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width={strokeWidth}
+>
+  <Fragment set:html={path} />
+</svg>

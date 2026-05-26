@@ -1,0 +1,88 @@
+---
+import ButtonLink from "./ButtonLink.astro";
+
+interface Props {
+  title?: string;
+  text?: string;
+}
+
+const {
+  title = "¿Listo para diseñar tu próximo gran avance?",
+  text = "Conversemos sobre tus objetivos técnicos y armemos una ruta clara para llevarlos a producción."
+} = Astro.props;
+---
+
+<section class="section-tight">
+  <div class="shell cta panel">
+    <div>
+      <span class="eyebrow">Arquitectura en marcha</span>
+      <h2 class="section-title">{title}</h2>
+      <p class="lead">{text}</p>
+      <div class="cta-assurance" aria-label="Garantías de experiencia">
+        <span>Respuesta humana</span>
+        <span>Ruta por fases</span>
+        <span>Lenguaje claro</span>
+      </div>
+    </div>
+    <div class="cta-actions">
+      <ButtonLink href="/contacto/" label="Contactar equipo" />
+      <ButtonLink href="/servicios/" label="Ver servicios" variant="secondary" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.75fr);
+    gap: 40px;
+    align-items: center;
+    padding: clamp(32px, 5vw, 56px);
+  }
+
+  .cta h2 {
+    margin-top: 16px;
+    max-width: 640px;
+  }
+
+  .cta p {
+    max-width: 600px;
+    margin-top: 14px;
+  }
+
+  .cta-assurance {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 18px;
+  }
+
+  .cta-assurance span {
+    padding: 7px 11px;
+    border: 1px solid var(--color-outline);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--color-on-surface-muted);
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .cta-actions {
+    display: grid;
+    gap: 12px;
+  }
+
+  @media (max-width: 820px) {
+    .cta {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+  }
+
+  @media (max-width: 400px) {
+    .cta-assurance span {
+      font-size: 11px;
+      padding: 5px 9px;
+    }
+  }
+</style>
